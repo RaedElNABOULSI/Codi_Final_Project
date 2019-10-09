@@ -14,18 +14,15 @@ class TestimonialController extends Controller
      */
     public function index()
     {
-        //
+//------------------------@start Get all testimonials -------------------------------------------
+
+          $testimonials = Testimonials::all();
+          return   $testimonials ;
+
+//------------------------@end Get all testimonials --------------------------------------------
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+    
 
     /**
      * Store a newly created resource in storage.
@@ -35,19 +32,21 @@ class TestimonialController extends Controller
      */
     public function store(Request $request)
     {
-        //
+         //------------------------@start Insert a testimonial -------------------------------------------
+          
+
+         $testimonials= new Testimonials; // create a new instance of the model
+
+         $testimonials  ->name = $request->name; // validate testimonial name input
+         $testimonials  ->content = $request->content; // validate content name input
+    
+
+         $testimonials  ->save(); // insert records to the database
+
+      //------------------------@end Insert a testimonial-------------------------------------------
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Testimonials  $testimonials
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Testimonials $testimonials)
-    {
-        //
-    }
+  
 
     /**
      * Show the form for editing the specified resource.
@@ -55,22 +54,24 @@ class TestimonialController extends Controller
      * @param  \App\Testimonials  $testimonials
      * @return \Illuminate\Http\Response
      */
-    public function edit(Testimonials $testimonials)
+    public function edit($id)
     {
-        //
+//------------------------@start update a testimonial field ---------------------------------------------------
+        
+         $testimonials = Testimonials ::find($id); // update by id
+
+         $name = $request->get('name'); // validate testimonial name input
+         $content= $request->get('content'); // validate testimonial content input
+        
+         $testimonials ->name= $name ; // assign input request to testimonial name record in database
+         $testimonials  ->content= $content; // assign input request to testimonial content record in database
+ 
+         $testimonials ->save(); // updates all fields
+ 
+  //------------------------@end update a testimonial field--------- ---------------------------------------------------
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Testimonials  $testimonials
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Testimonials $testimonials)
-    {
-        //
-    }
+  
 
     /**
      * Remove the specified resource from storage.
@@ -78,8 +79,14 @@ class TestimonialController extends Controller
      * @param  \App\Testimonials  $testimonials
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Testimonials $testimonials)
+    public function destroy($id)
     {
-        //
+//------------------------@start delete a testimonial field ---------------------------------------------------
+
+        $testimonials = Testimonials::find($id); // find testimonial by id
+
+        $testimonials ->delete(); // delete a testimonial record
+
+ //------------------------@end delete a testimonial field ---------------------------------------------------
     }
 }
