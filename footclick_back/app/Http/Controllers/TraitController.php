@@ -14,18 +14,12 @@ class TraitController extends Controller
      */
     public function index()
     {
-        //
+//------------------------@start Get all traits -------------------------------------------
+         $traits = Traits::all();
+         return   $traits;
+//------------------------@end Get all traits --------------------------------------------
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -35,19 +29,19 @@ class TraitController extends Controller
      */
     public function store(Request $request)
     {
-        //
+//------------------------@start Insert a trait ---------------------------------------------------------
+          
+
+     $traits = new Traits; // create a new instance of the model
+
+     $traits  ->trait = $request->trait; // validate trait input
+
+    $traits  ->save(); // insert records to the database
+
+//------------------------@end Insert a trait ----------------------------------------------------------
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Traits  $traits
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Traits $traits)
-    {
-        //
-    }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -55,22 +49,22 @@ class TraitController extends Controller
      * @param  \App\Traits  $traits
      * @return \Illuminate\Http\Response
      */
-    public function edit(Traits $traits)
+    public function edit($id)
     {
-        //
+//------------------------@start update a trait field ---------------------------------------------------
+        
+         $traits  = Traits::find($id); // update by id
+
+         $trait = $request->get('trait'); // validate trait input
+        
+         $traits ->trait= $trait ; // assign input request to trait record in database
+    
+         $traits ->save(); // updates all fields
+ 
+  //------------------------@end update a trait field ---------------------------------------------------
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Traits  $traits
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Traits $traits)
-    {
-        //
-    }
+
 
     /**
      * Remove the specified resource from storage.
@@ -78,8 +72,14 @@ class TraitController extends Controller
      * @param  \App\Traits  $traits
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Traits $traits)
+    public function destroy($id)
     {
-        //
+//------------------------@start delete a trait field ---------------------------------------------------
+
+        $traits=Traits::find($id); //  // find trait by id
+
+        $traits->delete(); // delete a trait record
+
+//------------------------@start delete a trait field ---------------------------------------------------
     }
 }
