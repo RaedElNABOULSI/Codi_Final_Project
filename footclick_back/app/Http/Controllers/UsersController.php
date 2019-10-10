@@ -49,16 +49,15 @@ class UsersController extends Controller
     }
 
 
-
-    /**
-     * Show the form for editing the specified resource.
+   /**
+     * Update the specified resource in storage.
      *
-     * @param  \App\User  $user
-     * @return \Illuminate\Http\Response
+     * @param  int  $id
+     * @return Response
      */
-    public function edit($id)
+    public function update($id,Request $request)
     {
-//------------------------@start update a user field ---------------------------------------------------
+        //------------------------@start update a user field ---------------------------------------------------
         
         $user  = User::find($id); // update by id
 
@@ -85,9 +84,7 @@ class UsersController extends Controller
         $user ->save(); // updates all fields
 
  //------------------------@end update a user field ---------------------------------------------------
-    }
-
-  
+    }  
 
     /**
      * Remove the specified resource from storage.

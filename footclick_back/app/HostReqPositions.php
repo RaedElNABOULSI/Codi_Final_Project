@@ -21,4 +21,5 @@ class HostReqPositions extends Model
     protected $fillable = [
         'host_id','position_id'
     ];
+    public $timestamps = false;
 }

@@ -21,4 +21,5 @@ class Positions extends Model
     protected $fillable = [
         'position'
     ];
+    public $timestamps = false;
 }

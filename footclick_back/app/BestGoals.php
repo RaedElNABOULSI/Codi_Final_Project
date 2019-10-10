@@ -21,4 +21,5 @@ class BestGoals extends Model
     protected $fillable = [
         'video','description','player_id','added_on'
     ];
+    public $timestamps = false;
 }

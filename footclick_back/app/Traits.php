@@ -21,4 +21,5 @@ class Traits extends Model
     protected $fillable = [
         'trait'
     ];
+    public $timestamps = false;
 }

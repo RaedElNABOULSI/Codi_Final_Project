@@ -21,4 +21,5 @@ class TeamRequests extends Model
     protected $fillable = [
         'status','type','player_id','host_id','added on'
     ];
+    public $timestamps = false;
 }

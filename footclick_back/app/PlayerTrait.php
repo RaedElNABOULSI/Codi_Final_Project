@@ -21,4 +21,5 @@ class PlayerTrait extends Model
     protected $fillable = [
         'player_id','trait_id'
     ];
+    public $timestamps = false;
 }

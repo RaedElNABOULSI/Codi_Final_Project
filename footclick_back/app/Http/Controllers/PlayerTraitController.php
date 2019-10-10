@@ -46,16 +46,15 @@ class PlayerTraitController extends Controller
  //------------------------@end Insert a player trait-------------------------------------------
     }
 
-
-    /**
-     * Show the form for editing the specified resource.
+     /**
+     * Update the specified resource in storage.
      *
-     * @param  \App\PlayerTrait  $playerTrait
-     * @return \Illuminate\Http\Response
+     * @param  int  $id
+     * @return Response
      */
-    public function edit($id)
+    public function update($id,Request $request)
     {
-//------------------------@start update a player trait field ---------------------------------------------------
+        //------------------------@start update a player trait field ---------------------------------------------------
         
        $playerTrait = PlayerTrait::find($id); // update by id
 
@@ -69,8 +68,6 @@ class PlayerTraitController extends Controller
 
 //------------------------@end update a player trait field ---------------------------------------------------
     }
-
-  
 
     /**
      * Remove the specified resource from storage.

@@ -44,32 +44,30 @@ class PlayerPositionController extends Controller
 //------------------------@end Insert a position for a player -------------------------------------------
     }
 
-  
 
-    /**
-     * Show the form for editing the specified resource.
+
+   /**
+     * Update the specified resource in storage.
      *
-     * @param  \App\PlayerPositions  $playerPositions
-     * @return \Illuminate\Http\Response
+     * @param  int  $id
+     * @return Response
      */
-    public function edit($id)
+    public function update($id,Request $request)
     {
-       //------------------------@start update a player position field ---------------------------------------------------
+             //------------------------@start update a player position field ---------------------------------------------------
         
-       $playerPositions= PlayerPositions::find($id); // update by id
+             $playerPositions= PlayerPositions::find($id); // update by id
 
-       $position_id = $request->get('position_id'); // validate position id input
-       $player_id= $request->get('player_id'); // validate player id input
-       
-       $playerPositions ->position_id= $position_id; // assign input request to position id record in database
-       $playerPositions ->player_id= $player_id; // assign input request to player id record in database
-
-       $playerPositions->save(); // updates all fields
-
-//------------------------@end update a player position field ---------------------------------------------------
+             $position_id = $request->get('position_id'); // validate position id input
+             $player_id= $request->get('player_id'); // validate player id input
+             
+             $playerPositions ->position_id= $position_id; // assign input request to position id record in database
+             $playerPositions ->player_id= $player_id; // assign input request to player id record in database
+      
+             $playerPositions->save(); // updates all fields
+      
+      //------------------------@end update a player position field ---------------------------------------------------
     }
-
-
 
     /**
      * Remove the specified resource from storage.

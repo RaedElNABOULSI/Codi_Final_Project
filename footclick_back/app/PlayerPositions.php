@@ -21,4 +21,5 @@ class PlayerPositions extends Model
     protected $fillable = [
         'position_id','player_id'
     ];
+    public $timestamps = false;
 }

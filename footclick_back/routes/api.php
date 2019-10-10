@@ -28,7 +28,8 @@ Route::resource('position','PositionController');
 Route::resource('stadium','StadiumController');
 Route::resource('teamreq','TeamRequestController');
 Route::resource('testimonial','TestimonialController');
-Route::resource('trait','TraitsController');
+Route::resource('trait','TraitController');
+Route::resource('user','UsersController');
 // -------------------------------@end api resources -------------------------------------------------------
 
 

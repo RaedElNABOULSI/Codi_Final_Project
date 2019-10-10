@@ -42,29 +42,26 @@ class TraitController extends Controller
     }
 
 
-
-    /**
-     * Show the form for editing the specified resource.
+   /**
+     * Update the specified resource in storage.
      *
-     * @param  \App\Traits  $traits
-     * @return \Illuminate\Http\Response
+     * @param  int  $id
+     * @return Response
      */
-    public function edit($id)
+    public function update($id,Request $request)
     {
-//------------------------@start update a trait field ---------------------------------------------------
+     //------------------------@start update a trait field ---------------------------------------------------
         
-         $traits  = Traits::find($id); // update by id
+     $traits  = Traits::find($id); // update by id
 
-         $trait = $request->get('trait'); // validate trait input
-        
-         $traits ->trait= $trait ; // assign input request to trait record in database
+     $trait = $request->get('trait'); // validate trait input
     
-         $traits ->save(); // updates all fields
- 
-  //------------------------@end update a trait field ---------------------------------------------------
+     $traits ->trait= $trait ; // assign input request to trait record in database
+
+     $traits ->save(); // updates all fields
+
+//------------------------@end update a trait field ---------------------------------------------------
     }
-
-
 
     /**
      * Remove the specified resource from storage.

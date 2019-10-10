@@ -21,4 +21,5 @@ class Testimonials extends Model
     protected $fillable = [
         'name','content','added on'
     ];
+    public $timestamps = false; // deletes the delault built-in timesamps
 }

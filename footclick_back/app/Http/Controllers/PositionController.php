@@ -44,28 +44,26 @@ class PositionController extends Controller
 
 
 
-    /**
-     * Show the form for editing the specified resource.
+   /**
+     * Update the specified resource in storage.
      *
-     * @param  \App\Positions  $positions
-     * @return \Illuminate\Http\Response
+     * @param  int  $id
+     * @return Response
      */
-    public function edit($id)
+    public function update($id,Request $request)
     {
-         //------------------------@start update a football position field ---------------------------------------------------
+           //------------------------@start update a football position field ---------------------------------------------------
         
-         $positions = Positions::find($id); // update by id
+           $positions = Positions::find($id); // update by id
 
-         $position = $request->get('position'); // validate position input
-       
-         $positions  ->position= $position ; // assign input request to position record in database
- 
-         $positions ->save(); // updates all fields
- 
-  //------------------------@end update a football position field  ---------------------------------------------------
+           $position = $request->get('position'); // validate position input
+         
+           $positions  ->position= $position ; // assign input request to position record in database
+   
+           $positions ->save(); // updates all fields
+   
+    //------------------------@end update a football position field  ---------------------------------------------------
     }
-
-
 
     /**
      * Remove the specified resource from storage.

@@ -43,35 +43,33 @@ class BestGoalController extends Controller
       //------------------------@end Insert a video of all the best goals -------------------------------------------
     }
 
-
-
-    /**
-     * Show the form for editing the specified resource.
+  /**
+     * Update the specified resource in storage.
      *
-     * @param  \App\BestGoals  $bestGoals
-     * @return \Illuminate\Http\Response
+     * @param  int  $id
+     * @return Response
      */
-    public function edit($id)
+    public function update($id,Request $request)
     {
- //------------------------@start update a video field ---------------------------------------------------
+         //------------------------@start update a video field ---------------------------------------------------
         
-        $bestGoals  = BestGoals::find($id); // update by id
+         $bestGoals  = BestGoals::find($id); // update by id
 
-        $video = $request->get('video'); // validate video input
-        $description= $request->get('description'); // validate description input
-        $player_id= $request->get('player_id'); // validate player id input
-
-
-        $bestGoals ->video= $video ; // assign input request to video record in database
-        $bestGoals  ->description = $description; // assign input request to description record in database
-        $bestGoals  ->player_id= $player_id; // assign input request to player id record in database
-
-        $bestGoals ->save(); // updates all fields
-
- //------------------------@end update a video field ---------------------------------------------------
+         $video = $request->get('video'); // validate video input
+         $description= $request->get('description'); // validate description input
+         $player_id= $request->get('player_id'); // validate player id input
+ 
+ 
+         $bestGoals ->video= $video ; // assign input request to video record in database
+         $bestGoals  ->description = $description; // assign input request to description record in database
+         $bestGoals  ->player_id= $player_id; // assign input request to player id record in database
+ 
+         $bestGoals ->save(); // updates all fields
+ 
+  //------------------------@end update a video field ---------------------------------------------------
     }
 
- 
+
     /**
      * Remove the specified resource from storage.
      *

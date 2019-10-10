@@ -16,7 +16,7 @@ class CreatePlayerTraitTable extends Migration
         Schema::create('Player_Trait', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('player_id'); // id of a player
-            $table->integer('trait_id'); // id of a football trait
+            $table->unsignedBigInteger('trait_id'); // id of a football trait
 
            //-----------------------------------------------------@start foreign keys ---------------------------------------
              $table->foreign('player_id')->references('id')->on('users'); // player id reference

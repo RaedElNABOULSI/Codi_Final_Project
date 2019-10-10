@@ -43,4 +43,5 @@ class User extends Authenticatable
     protected $casts = [
       
     ];
+    public $timestamps = false;
 }

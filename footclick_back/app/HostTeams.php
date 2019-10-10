@@ -21,4 +21,5 @@ class HostTeams extends Model
     protected $fillable = [
         'no_of_players','age_min','age_max','team_name','added on'
     ];
+    public $timestamps = false;
 }

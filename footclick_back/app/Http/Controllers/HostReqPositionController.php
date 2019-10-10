@@ -44,15 +44,15 @@ class HostReqPositionController extends Controller
     }
 
 
-    /**
-     * Show the form for editing the specified resource.
+   /**
+     * Update the specified resource in storage.
      *
-     * @param  \App\HostReqPositions  $hostReqPositions
-     * @return \Illuminate\Http\Response
+     * @param  int  $id
+     * @return Response
      */
-    public function edit($id)
+    public function update($id,Request $request)
     {
-       //------------------------@start update a host requested position field ---------------------------------------------------
+         //------------------------@start update a host requested position field ---------------------------------------------------
         
        $hostReqPositions = HostReqPositions::find($id); // update by id
 

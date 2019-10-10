@@ -45,17 +45,17 @@ class HostTeamController extends Controller
       //------------------------@end Insert a host of a team -------------------------------------------
     }
 
-    
 
-    /**
-     * Show the form for editing the specified resource.
+
+   /**
+     * Update the specified resource in storage.
      *
-     * @param  \App\HostTeams  $hostTeams
-     * @return \Illuminate\Http\Response
+     * @param  int  $id
+     * @return Response
      */
-    public function edit($id)
+    public function update($id,Request $request)
     {
-//------------------------@start update a host team field ---------------------------------------------------
+        //------------------------@start update a host team field ---------------------------------------------------
         
         $hostTeams  =HostTeams::find($id); // update by id
 

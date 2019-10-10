@@ -21,4 +21,5 @@ class MatchRequests extends Model
     protected $fillable = [
         'status','req_host_id','ack_host_id','winning_host_id','added on'
     ];
+    public $timestamps = false;
 }

@@ -45,35 +45,33 @@ class TeamRequestController extends Controller
     }
 
  
-
-    /**
-     * Show the form for editing the specified resource.
+   /**
+     * Update the specified resource in storage.
      *
-     * @param  \App\TeamRequests  $teamRequests
-     * @return \Illuminate\Http\Response
+     * @param  int  $id
+     * @return Response
      */
-    public function edit($id)
+    public function update($id,Request $request)
     {
-//------------------------@start update a teamrequest field ---------------------------------------------------
+     //------------------------@start update a teamrequest field ---------------------------------------------------
         
-         $teamRequests = TeamRequests::find($id); // update by id
+     $teamRequests = TeamRequests::find($id); // update by id
 
-         $status = $request->get('status'); // validate teamrequest status input
-         $type= $request->get('type'); // validate teamrequest type input
-         $player_id= $request->get('player_id'); // validate player id input
-         $host_id= $request->get('host_id'); // validate host id input
- 
- 
-         $teamRequests ->status= $status ; // assign input request to teamrequest status record in database
-         $teamRequests ->type= $type ; // assign input request to teamrequest type record in database
-         $teamRequests  ->player_id = $player_id; // assign input request to player id record in database
-         $teamRequests->host_id= $host_id; // assign input request to host id record in database
- 
-         $teamRequests->save(); // updates all fields
- 
-  //------------------------@end update a teamrequest field ---------------------------------------------------
+     $status = $request->get('status'); // validate teamrequest status input
+     $type= $request->get('type'); // validate teamrequest type input
+     $player_id= $request->get('player_id'); // validate player id input
+     $host_id= $request->get('host_id'); // validate host id input
+
+
+     $teamRequests ->status= $status ; // assign input request to teamrequest status record in database
+     $teamRequests ->type= $type ; // assign input request to teamrequest type record in database
+     $teamRequests  ->player_id = $player_id; // assign input request to player id record in database
+     $teamRequests->host_id= $host_id; // assign input request to host id record in database
+
+     $teamRequests->save(); // updates all fields
+
+//------------------------@end update a teamrequest field ---------------------------------------------------
     }
-
 
     /**
      * Remove the specified resource from storage.

@@ -21,4 +21,5 @@ class Stadiums extends Model
     protected $fillable = [
         'name','image','capacity','region','price','added on'
     ];
+    public $timestamps = false;
 }

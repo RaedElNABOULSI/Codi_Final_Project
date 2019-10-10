@@ -17,8 +17,8 @@ class TestimonialController extends Controller
 //------------------------@start Get all testimonials -------------------------------------------
 
           $testimonials = Testimonials::all();
-          return   $testimonials ;
-
+           return   $testimonials;
+       
 //------------------------@end Get all testimonials --------------------------------------------
     }
 
@@ -47,31 +47,30 @@ class TestimonialController extends Controller
     }
 
   
-
-    /**
-     * Show the form for editing the specified resource.
+  /**
+     * Update the specified resource in storage.
      *
-     * @param  \App\Testimonials  $testimonials
-     * @return \Illuminate\Http\Response
+     * @param  int  $id
+     * @return Response
      */
-    public function edit($id)
+    public function update($id,Request $request)
     {
 //------------------------@start update a testimonial field ---------------------------------------------------
         
-         $testimonials = Testimonials ::find($id); // update by id
+        $testimonials = Testimonials ::find($id); // update by id
 
-         $name = $request->get('name'); // validate testimonial name input
-         $content= $request->get('content'); // validate testimonial content input
-        
-         $testimonials ->name= $name ; // assign input request to testimonial name record in database
-         $testimonials  ->content= $content; // assign input request to testimonial content record in database
- 
-         $testimonials ->save(); // updates all fields
- 
-  //------------------------@end update a testimonial field--------- ---------------------------------------------------
+        $name = $request->get('name'); // validate testimonial name input
+        $content= $request->get('content'); // validate testimonial content input
+       
+        $testimonials ->name= $name ; // assign input request to testimonial name record in database
+        $testimonials  ->content= $content; // assign input request to testimonial content record in database
+
+        $testimonials ->save(); // updates all fields
+
+ //------------------------@end update a testimonial field--------- ---------------------------------------------------
     }
 
-  
+
 
     /**
      * Remove the specified resource from storage.

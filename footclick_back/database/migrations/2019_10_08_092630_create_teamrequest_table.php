@@ -18,7 +18,7 @@ class CreateTeamrequestTable extends Migration
             $table->integer('status'); // 0 for pending and 1 for accepted
             $table->string('type'); // invite/joinRequest 
             $table->unsignedBigInteger('player_id'); // id for player
-            $table->insignedBigInteger('host_id'); // id for a host
+            $table->unsignedBigInteger('host_id'); // id for a host
             $table->timestamp('added on')->useCurrent(); // date of team request created
  //-----------------------------------------------------@start foreign keys ---------------------------------------
    $table->foreign('host_id')->references('id')->on('Host_Team'); 

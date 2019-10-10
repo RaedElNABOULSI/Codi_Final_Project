@@ -46,39 +46,35 @@ class StadiumController extends Controller
 //------------------------@end  Insert a football stadium -------------------------------------------
     }
 
-
-
-    /**
-     * Show the form for editing the specified resource.
+   /**
+     * Update the specified resource in storage.
      *
-     * @param  \App\Stadiums  $stadiums
-     * @return \Illuminate\Http\Response
+     * @param  int  $id
+     * @return Response
      */
-    public function edit($id)
+    public function update($id,Request $request)
     {
- //------------------------@start update a stadium field ---------------------------------------------------
+       //------------------------@start update a stadium field ---------------------------------------------------
         
-         $stadiums = Stadiums::find($id); // update by id
+       $stadiums = Stadiums::find($id); // update by id
 
-         $name = $request->get('name'); // validate stadium name input
-         $image= $request->get('image'); // validate stadium image input
-         $capacity= $request->get('capacity'); // validate stadium capacity input
-         $region= $request->get('region'); // validate stadium region input
-         $price= $request->get('price'); // validate stadium price input
- 
- 
-         $stadiums ->name= $name ; // assign input request to stadium name record in database
-         $stadiums ->image= $image ; // assign input request to stadium image record in database
-         $stadiums ->capacity= $capacity ; // assign input request to stadium capacity record in database
-         $stadiums  ->region = $region; // assign input request to stadium region record in database
-         $stadiums  ->price= $price; // assign input request to stadium price record in database
- 
-         $stadiums->save(); // updates all fields
- 
-  //------------------------@end update a stadium field ---------------------------------------------------
+       $name = $request->get('name'); // validate stadium name input
+       $image= $request->get('image'); // validate stadium image input
+       $capacity= $request->get('capacity'); // validate stadium capacity input
+       $region= $request->get('region'); // validate stadium region input
+       $price= $request->get('price'); // validate stadium price input
+
+
+       $stadiums ->name= $name ; // assign input request to stadium name record in database
+       $stadiums ->image= $image ; // assign input request to stadium image record in database
+       $stadiums ->capacity= $capacity ; // assign input request to stadium capacity record in database
+       $stadiums  ->region = $region; // assign input request to stadium region record in database
+       $stadiums  ->price= $price; // assign input request to stadium price record in database
+
+       $stadiums->save(); // updates all fields
+
+//------------------------@end update a stadium field ---------------------------------------------------
     }
-
-
 
     /**
      * Remove the specified resource from storage.
