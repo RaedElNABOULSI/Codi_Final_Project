@@ -4,11 +4,15 @@ namespace App\Http\Controllers;
 
 use App\HostTeams;
 use Illuminate\Http\Request;
-
+/**
+ * @group Host Team management
+ *
+ * APIs for managing Hosts
+ */
 class HostTeamController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display hosts
      *
      * @return \Illuminate\Http\Response
      */
@@ -23,9 +27,9 @@ class HostTeamController extends Controller
   
 
     /**
-     * Store a newly created resource in storage.
+     * Create a new host
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @bodParam  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -48,9 +52,10 @@ class HostTeamController extends Controller
 
 
    /**
-     * Update the specified resource in storage.
+     * Update a host
      *
-     * @param  int  $id
+     * @bodyParam  int  $id
+     * @bodParam  \Illuminate\Http\Request  $request
      * @return Response
      */
     public function update($id,Request $request)
@@ -77,9 +82,9 @@ class HostTeamController extends Controller
 
 
     /**
-     * Remove the specified resource from storage.
+     * Remove a host
      *
-     * @param  \App\HostTeams  $hostTeams
+     * @bodParam  int  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

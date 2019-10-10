@@ -4,11 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Testimonials;
 use Illuminate\Http\Request;
-
+/**
+ * @group Testimonial management
+ *
+ * APIs for managing testimonials
+ */
 class TestimonialController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display testimonials
      *
      * @return \Illuminate\Http\Response
      */
@@ -25,9 +29,9 @@ class TestimonialController extends Controller
     
 
     /**
-     * Store a newly created resource in storage.
+     * Create a new testimonial
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @bodyParam  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -48,9 +52,10 @@ class TestimonialController extends Controller
 
   
   /**
-     * Update the specified resource in storage.
+     * Update a testimonial
      *
-     * @param  int  $id
+     * @bodyParam  int  $id
+     * @bodyParam  \Illuminate\Http\Request  $request
      * @return Response
      */
     public function update($id,Request $request)
@@ -73,9 +78,9 @@ class TestimonialController extends Controller
 
 
     /**
-     * Remove the specified resource from storage.
+     * Remove a testimonial
      *
-     * @param  \App\Testimonials  $testimonials
+     * @bodyParam  int  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

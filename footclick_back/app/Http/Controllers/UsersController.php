@@ -5,10 +5,15 @@ namespace App\Http\Controllers;
 use App\User;
 use Illuminate\Http\Request;
 
+/**
+ * @group User management
+ *
+ * APIs for managing users
+ */
 class UsersController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Displays Users
      *
      * @return \Illuminate\Http\Response
      */
@@ -22,9 +27,9 @@ class UsersController extends Controller
 
 
     /**
-     * Store a newly created resource in storage.
+     *  Create a user
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @bodyParam  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -50,9 +55,10 @@ class UsersController extends Controller
 
 
    /**
-     * Update the specified resource in storage.
+     * Update a user
      *
-     * @param  int  $id
+     * @bodyParam  int  $id
+     * @bodyParam \Illuminate\Http\Request  $request
      * @return Response
      */
     public function update($id,Request $request)
@@ -87,9 +93,9 @@ class UsersController extends Controller
     }  
 
     /**
-     * Remove the specified resource from storage.
+     * Remove a user
      *
-     * @param  \App\User  $user
+     * @bodyParam int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

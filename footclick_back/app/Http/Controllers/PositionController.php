@@ -4,11 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Positions;
 use Illuminate\Http\Request;
-
+/**
+ * @group Football Position management
+ *
+ * APIs for managing positions
+ */
 class PositionController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display football positions
      *
      * @return \Illuminate\Http\Response
      */
@@ -23,9 +27,9 @@ class PositionController extends Controller
  
 
     /**
-     * Store a newly created resource in storage.
+     * Create a new position
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @bodyParam  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -45,9 +49,10 @@ class PositionController extends Controller
 
 
    /**
-     * Update the specified resource in storage.
+     * Update a position
      *
-     * @param  int  $id
+     * @bodyParam  int  $id
+     * @bodyParam  \Illuminate\Http\Request  $request
      * @return Response
      */
     public function update($id,Request $request)
@@ -66,9 +71,9 @@ class PositionController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove a positions
      *
-     * @param  \App\Positions  $positions
+     * @bodyParam  int  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

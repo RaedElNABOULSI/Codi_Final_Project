@@ -4,11 +4,15 @@ namespace App\Http\Controllers;
 
 use App\BestGoals;
 use Illuminate\Http\Request;
-
+/**
+ * @group BestGoal Videos management
+ *
+ * APIs for managing bestgoal videos
+ */
 class BestGoalController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display goals
      *
      * @return \Illuminate\Http\Response
      */
@@ -22,9 +26,9 @@ class BestGoalController extends Controller
 
 
     /**
-     * Store a newly created resource in storage.
+     * Create a new video goal
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @bodyParam  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -44,9 +48,10 @@ class BestGoalController extends Controller
     }
 
   /**
-     * Update the specified resource in storage.
+     * Update a video goal
      *
-     * @param  int  $id
+     * @bodyParam  int  $id
+     * @bodyParam  \Illuminate\Http\Request  $request
      * @return Response
      */
     public function update($id,Request $request)
@@ -71,9 +76,9 @@ class BestGoalController extends Controller
 
 
     /**
-     * Remove the specified resource from storage.
+     * Remove a video goal
      *
-     * @param  \App\BestGoals  $bestGoals
+     * @bodyParam  \int  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

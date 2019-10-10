@@ -4,11 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Traits;
 use Illuminate\Http\Request;
-
+/**
+ * @group Trait management
+ *
+ * APIs for managing traits
+ */
 class TraitController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a trait
      *
      * @return \Illuminate\Http\Response
      */
@@ -22,9 +26,9 @@ class TraitController extends Controller
 
 
     /**
-     * Store a newly created resource in storage.
+     * Create a new football trait
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @bodyParam  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -43,9 +47,10 @@ class TraitController extends Controller
 
 
    /**
-     * Update the specified resource in storage.
+     * Update a football trait
      *
-     * @param  int  $id
+     * @bodyParam  int  $id
+     * @bodyParam  \Illuminate\Http\Request  $request
      * @return Response
      */
     public function update($id,Request $request)
@@ -64,9 +69,9 @@ class TraitController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove a football trait
      *
-     * @param  \App\Traits  $traits
+     * @bodyParam  int  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

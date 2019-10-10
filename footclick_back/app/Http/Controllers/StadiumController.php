@@ -4,11 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Stadiums;
 use Illuminate\Http\Request;
-
+/**
+ * @group Stadium management
+ *
+ * APIs for managing stadiums
+ */
 class StadiumController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display stadiums
      *
      * @return \Illuminate\Http\Response
      */
@@ -23,9 +27,9 @@ class StadiumController extends Controller
  
 
     /**
-     * Store a newly created resource in storage.
+     * Create a new stadium
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @bodyParam  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -47,9 +51,10 @@ class StadiumController extends Controller
     }
 
    /**
-     * Update the specified resource in storage.
+     * Update a stadium
      *
-     * @param  int  $id
+     * @bodyParam  int  $id
+     *  @bodyParam  \Illuminate\Http\Request  $request
      * @return Response
      */
     public function update($id,Request $request)
@@ -77,9 +82,9 @@ class StadiumController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove a stadium
      *
-     * @param  \App\Stadiums  $stadiums
+     * @bodyParam  int  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
