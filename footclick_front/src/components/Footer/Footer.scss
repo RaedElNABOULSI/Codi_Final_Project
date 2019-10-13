@@ -1,0 +1,32 @@
+//------------------------ @start Footer Section----------------------------------------------------------------
+.Footer {
+  border-top: solid rgb(92, 87, 87);
+  background-color: rgba(156, 133, 133, 0.253);
+  padding-top: 2rem;
+  margin-top: 4rem;
+  height: 14.5rem;
+  p {
+    padding-top: 3rem;
+    text-align: center;
+  }
+  h1 {
+    text-align: center;
+  }
+  .SocialMedia {
+    z-index: 999;
+    text-align: center;
+    .fa-facebook-square {
+      z-index: 999;
+      color: #4267b2;
+      font-size: 3rem;
+    }
+    .fa-instagram {
+      z-index: 999;
+      padding-left: 3rem;
+      font-size: 3rem;
+      color: #f783ac;
+    }
+  }
+}
+
+//------------------------ @end Footer Section----------------------------------------------------------------
