@@ -29,13 +29,13 @@ class NavBar extends Component {
         </label>
         {/* ------------------------------------@start Navbar links------------------------------------------------ */}
         <ul className="Navbar">
-          <Link to="/blogpage" className="Navbar_Link">
+          <Link to="/stadiums" className="Navbar_Link">
             Stadiums
           </Link>
-          <Link to="/eventpage" className="Navbar_Link">
+          <Link to="/bestgoals" className="Navbar_Link">
             Best Goals
           </Link>
-          <Link to="/gallerypage" className="Navbar_Link">
+          <Link to="/about" className="Navbar_Link">
             About
           </Link>
           <Link to="/contactus" className="Navbar_Link">
