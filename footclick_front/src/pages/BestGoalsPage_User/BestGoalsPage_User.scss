@@ -1,0 +1,30 @@
+//---------------------------------@start bestGoalspage_User-----------------------------------
+.BestGoalsPage_User {
+  .BestGoalsPage_User_Content {
+    padding-top: 10rem;
+    height: 40rem;
+    // background-color: pink;
+
+    h1 {
+      text-align: center;
+      padding-bottom: 2rem;
+    }
+    .Horizontal_Line {
+      border: 1px solid black;
+      width: 40%;
+      margin: 0 auto;
+    }
+  }
+  .BestGoalsPage_User_Content_Videos {
+    margin-top: 5rem;
+    .embed-responsive-item {
+      width: 30rem;
+      height: 15rem;
+    }
+  }
+
+  .embed-responsive-16by9 {
+    height: 20rem;
+  }
+}
+//---------------------------------@end bestGoalspage_User-----------------------------------
