@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Http\Request;
-
+use Illuminate\Database\Eloquent\Collection;
+use App\Stadiums;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -31,6 +32,14 @@ Route::resource('testimonial','TestimonialController');
 Route::resource('trait','TraitController');
 Route::resource('user','UsersController');
 // -------------------------------@end api resources -------------------------------------------------------
+
+
+// -------------------------------@start filter by capacity stadium--------------------------------------------------
+                              
+Route::get('filter_sort', 'StadiumController@filter') ;
+                               
+// -------------------------------@end filter by capacity in stadium-----------------------------------------------
+
 
 
 // -------------------------------@start Login -----------------------------------------------------------------
