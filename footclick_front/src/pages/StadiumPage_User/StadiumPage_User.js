@@ -24,6 +24,7 @@ class StadiumPage_User extends Component {
   //------------------------ @start Fetching ----------------------------------------------------------------------------
   componentDidMount() {
     axios.get("http://127.0.0.1:8000/api/stadium").then(res => {
+      console.log("this is the response");
       console.log(res.data);
 
       this.setState({ data: res.data });

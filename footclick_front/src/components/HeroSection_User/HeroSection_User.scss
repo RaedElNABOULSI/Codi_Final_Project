@@ -29,11 +29,18 @@
       font-family: cursive;
     }
 
-    .Button {
-      margin-left: 15%;
-      font-weight: bold;
-      margin-top: 1rem;
+    //------------------------@start Buttons----------------------------------------------
+    .Buttons {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+      text-align: center;
+      //------------------------@start Buttons text----------------------------------------------
+      .Button {
+        font-weight: bold;
+      }
+      //------------------------@end Buttons text ----------------------------------------------
     }
+    //------------------------@end Buttons --------------------------------------------------------
   }
   //------------------------@end Hero content ------------------------------------------------------------------------
 }
