@@ -2,6 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Roles;
+use App\UserRoles;
+use App\PlayerTrait;
+use App\Traits;
+use App\PlayerPositions;
+use App\Positions;
+use App\Locations;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -27,28 +34,77 @@ class UsersController extends Controller
 
 
     /**
-     *  Create a user
+     *  Create a new user
      *
      * @bodyParam  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    { 
+//----------------------------@start get params/body registration values ------------------------------------------------------------------
+
+  
+        $email=$request->email_param; // get email value
+        $password=$request->password_param; // get password value
+        $footclickName=$request->footClickName_param; // get footclick name value
+        $foot=$request->footSelected_param; // get foot value
+        $height=$request->height_param; // get height value
+        $location=$request->locationSelected_param; // get location value
+        $position=$request->positionSelected_param; // get position value
+        $trait=$request->traitSelected_param; // get trait value
+
+//----------------------------@end get params/body registration values ------------------------------------------------------------------
+
+//------------------------@start Insert a user------------------------------------------------------------------------
+
+$user = new User; // create a new instance of the model
+$playerPosition=new PlayerPositions;
+$trait=new Traits;
+$playerTrait=new PlayerTrait;
+$userRole=new UserRoles;
+
+     $user ->email =  $email; // validate email input
+       $user ->password =   $password; // validate password input
+     $user ->footclick_name = $footclickName; // validate footclick name input
+     $user  ->foot =    $foot; // validate foot input
+     $user  ->height =  $height; // validate height input
+
+     $locationId = Locations::where('location', $location)->value('id'); // get location id 
+     $user ->location_id =   $locationId; // validate location id input
+
+     $positionId =  Positions::where('position', $position)->value('id'); // get position id 
+     $playerPosition ->position_id = $positionId; // validate position id input
+     $playerId =  User::where('email', $email)->value('id'); // get player id from 'users' table
+     $playerPosition->player_id=$playerId; // validate player id in 'Player_Position' table
+
+     $traitId =  Traits::where('trait', $trait)->value('id'); // get trait id 
+     $playerTrait ->trait_id = $traitId; // validate trait id input
+     $playerTrait->player_id=$playerId; // validate player id in 'Player_Trait' table
+
+     $roleId =  Roles::where('role', 'Player')->value('id'); // get role id in 'Role' table
+     $userRole ->role_id = $roleId; // validate role id input
+     $userRole->user_id=$playerId; // // validate player id in 'User_Role' table
+
+    //  $user ->save(); // insert records to the database
+//------------------------@end Insert a user--------------------------------------------------------------------------------------------
+
+
+
 //------------------------@start Insert a user-------------------------------------------
           
-     $user = new User; // create a new instance of the model
+    //  $user = new User; // create a new instance of the model
 
-     $user  ->email = $request->email ; // validate email input
-     $user ->password = $request->password; // validate password input
-     $user ->footclick_name = $request->footclick_name; // validate footclick name input
-     $user  ->foot = $request->foot; // validate foot input
-     $user  ->height = $request->height ; // validate height input
-     $user ->location = $request->location; // validate location input
-     $user  ->position = $request->position ; // validate football position input
-     $user  ->trait = $request->trait; // validate trait input
-     $user ->role = $request->role; // validate player role input
+    //  $user  ->email = $request->email ; // validate email input
+    //  $user ->password = $request->password; // validate password input
+    //  $user ->footclick_name = $request->footclick_name; // validate footclick name input
+    //  $user  ->foot = $request->foot; // validate foot input
+    //  $user  ->height = $request->height ; // validate height input
+    //  $user ->location = $request->location; // validate location input
+    //  $user  ->position = $request->position ; // validate football position input
+    //  $user  ->trait = $request->trait; // validate trait input
+    //  $user ->role = $request->role; // validate player role input
 
-    $user ->save(); // insert records to the database
+    // $user ->save(); // insert records to the database
 
 //------------------------@end Insert a user -------------------------------------------
     }

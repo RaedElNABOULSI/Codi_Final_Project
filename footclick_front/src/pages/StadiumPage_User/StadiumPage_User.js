@@ -55,6 +55,7 @@ class StadiumPage_User extends Component {
         }
       })
       .then(res => {
+        console.log("This is the response");
         console.log(res);
 
         this.setState({ data: res.data });

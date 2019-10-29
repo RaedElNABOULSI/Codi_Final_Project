@@ -8,11 +8,11 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    public function mail()
+    public function mail(Request $request)
     {
        $name = 'Raed';
     //    Mail::to('raed_nb@hotmail.com')->send(new SendMailable($name));
-      
-       return 'Email was sent';
+      $result=$request->get('email');
+       return $result;
     }
 }

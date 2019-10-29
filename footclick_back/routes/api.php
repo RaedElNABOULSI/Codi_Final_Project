@@ -30,7 +30,7 @@ Route::resource('stadium','StadiumController');
 Route::resource('teamreq','TeamRequestController');
 Route::resource('testimonial','TestimonialController');
 Route::resource('trait','TraitController');
-Route::resource('user','UsersController');
+Route::resource('user','UsersController'); // Users registration
 // -------------------------------@end api resources -------------------------------------------------------
 
 
@@ -43,6 +43,7 @@ Route::get('filter_sort', 'StadiumController@filter') ;
 // -------------------------------@start Send Mail -----------------------------------------------------------------
 Route::get('/send/email', 'HomeController@mail');          
 // -------------------------------@end Send Mail ------------------------------------------------------------------
+
 
 // -------------------------------@start Login -----------------------------------------------------------------
                                 // here is the login function

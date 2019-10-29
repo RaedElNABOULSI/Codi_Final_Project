@@ -20,7 +20,7 @@ class ContactPage extends Component {
     console.log(this.state);
     axios.get("http://127.0.0.1:8000/api/send/email").then(res => {
       console.log("this is the response");
-      console.log(res.data);
+      console.log(res);
 
       // this.setState({ data: res.data });
     });

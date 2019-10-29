@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Button, Form, FormGroup, Label, Input, FormText } from "reactstrap";
+import axios from "axios";
+import { FormGroup, Label, Input } from "reactstrap";
 
 //------------------------@start import scss link ----------------------------------------------------------------------------
 import "../SignUpPage/SignUpPage.scss";
@@ -8,20 +9,67 @@ import "../SignUpPage/SignUpPage.scss";
 class SignUpPage extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      data: [],
+      email: [],
+      password: [],
+      footclickName: [],
+      footSelected: [],
+      height: [],
+      locationSelected: [],
+      positionSelected: [],
+      traitSelected: []
+    };
   }
+  // -----------------------------@start handleChange of new user input ----------------------------------------------------
+  handleChange = e => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
+  // -----------------------------@end handleChange of new user input ----------------------------------------------------
+
+  // -----------------------------@start handleSubmit to insert new user ----------------------------------------------------
+  handleSubmit = e => {
+    e.preventDefault();
+    console.log("email in handleSubmit post api");
+    console.log(this.state.email);
+    axios // api to post user
+      .post("http://127.0.0.1:8000/api/user", {
+        email_param: this.state.email,
+        password_param: this.state.password,
+        footClickName_param: this.state.footclickName,
+        footSelected_param: this.state.footSelected,
+        height_param: this.state.height,
+        locationSelected_param: this.state.locationSelected,
+        positionSelected_param: this.state.positionSelected,
+        traitSelected_param: this.state.traitSelected
+      })
+      .then(res => {
+        console.log("Response in post api");
+        console.log(res);
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+  };
+  // -----------------------------@end handleSubmit to insert new user -----------------------------------------------------------------
+
   render() {
     return (
       <div className="SignUpPage">
-        <form class="text-center border border-light p-5">
+        <form
+          class="text-center border border-light p-5"
+          onSubmit={this.handleSubmit}
+        >
           <p class="h4 mb-4">Register</p>
 
           {/* <!-- E-mail --> */}
           <input
             type="email"
+            name="email"
             id="defaultRegisterFormEmail"
             class="form-control mb-4"
             placeholder="E-mail"
+            onChange={this.handleChange}
             required
           />
 
@@ -29,9 +77,11 @@ class SignUpPage extends Component {
           <input
             type="password"
             id="defaultRegisterFormPassword"
+            name="password"
             class="form-control"
             placeholder="Password"
             aria-describedby="defaultRegisterFormPasswordHelpBlock"
+            onChange={this.handleChange}
             required
           />
           <small
@@ -45,9 +95,12 @@ class SignUpPage extends Component {
             <div className="col">
               <input
                 type="text"
+                name="footclickName"
                 id="defaultRegisterFormFirstName"
                 className="form-control"
                 placeholder="FootClick Name"
+                onChange={this.handleChange}
+                required
               />
             </div>
           </div>
@@ -56,7 +109,7 @@ class SignUpPage extends Component {
           {/* ---------------------------------------@start Foot-------------------------------------------- */}
           <div className="form-row mb-4">
             <div className="col">
-              <select name="footSelected">
+              <select name="footSelected" onChange={this.handleChange}>
                 <option value="default" selected="selected">
                   Choose your Preferred Foot
                 </option>
@@ -71,7 +124,9 @@ class SignUpPage extends Component {
           <input
             type="number"
             class="form-control mb-4"
+            name="height"
             placeholder="Height in cm"
+            onChange={this.handleChange}
             required
           />
           {/* ---------------------------------------@end HEIGHT-------------------------------------------- */}
@@ -79,7 +134,7 @@ class SignUpPage extends Component {
           {/* ---------------------------------------@start Location-------------------------------------------- */}
           <div className="form-row mb-4">
             <div className="col">
-              <select name="locationSelected">
+              <select name="locationSelected" onChange={this.handleChange}>
                 <option value="default" selected="selected">
                   Choose your Location
                 </option>
@@ -98,18 +153,19 @@ class SignUpPage extends Component {
             <div className="col">
               <FormGroup>
                 <Label for="exampleSelectMulti">Choose your Position</Label>
-                <Input
+                <select
                   type="select"
                   name="positionSelected"
                   id="exampleSelectMulti"
                   multiple
+                  onChange={this.handleChange}
                   required
                 >
                   <option value="Goalkeeper">Goalkeeper</option>
                   <option value="Defender">Defender</option>
                   <option value="Midfielder">Midfielder</option>
                   <option value="Attacker">Attacker</option>
-                </Input>
+                </select>
               </FormGroup>
             </div>
           </div>
@@ -124,15 +180,16 @@ class SignUpPage extends Component {
                   type="select"
                   name="traitSelected"
                   id="SelectMulti"
+                  onChange={this.handleChange}
                   multiple
                   required
                 >
-                  <option value="Goalkeeper">Speedster</option>
-                  <option value="Defender">Dribbler</option>
-                  <option value="Midfielder">Playmaker</option>
-                  <option value="Attacker">Engine</option>
-                  <option value="Attacker">Strength</option>
-                  <option value="Attacker">Clinical Finisher</option>
+                  <option value="Speedster">Speedster</option>
+                  <option value="Dribbler">Dribbler</option>
+                  <option value="Playmaker">Playmaker</option>
+                  <option value="Engine">Engine</option>
+                  <option value="Strength">Strength</option>
+                  <option value="Clinical Finisher">Clinical Finisher</option>
                 </Input>
               </FormGroup>
             </div>
@@ -158,7 +215,7 @@ class SignUpPage extends Component {
           <button class="btn btn-info my-4 btn-block" type="submit">
             Sign in
           </button>
-
+          {/* <input type="Submit" value="Sign In" /> */}
           {/* <!-- Social register --> */}
           <p>or sign up with:</p>
 

@@ -109,8 +109,7 @@ class StadiumController extends Controller
 
     public function filter(Request $request){
     //------------------------@start filter a stadium by capacity/price -------------------------------------------
-        // stadium_list null && order null => return all stadium
-        // else if order null 
+        
         $capacity = $request->get('selection_capacity_param'); //get params capacity value
         $order = $request->get('selection_order_param'); //get params order value
 
