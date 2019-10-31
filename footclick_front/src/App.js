@@ -8,6 +8,7 @@ import ContactPage from "./pages/ContactPage/ContactPage";
 import StadiumPage_User from "./pages/StadiumPage_User/StadiumPage_User";
 import SignUpPage from "./pages/SignUpPage/SignUpPage";
 import LogInPage from "./pages/LogInPage/LogInPage";
+import LandingPage_Player from "./pages/LandingPage_Player/LandingPage_Player";
 //------------------------ @end import pages ---------------------------------------------------------------------------
 
 import { Route, Switch } from "react-router-dom";
@@ -31,6 +32,7 @@ class App extends Component {
           <Route path="/stadiums" render={() => <StadiumPage_User />} />
           <Route path="/register" render={() => <SignUpPage />} />
           <Route path="/login" render={() => <LogInPage />} />
+          <Route path="/landing_player" render={() => <LandingPage_Player />} />
         </Switch>
       </div>
     );
