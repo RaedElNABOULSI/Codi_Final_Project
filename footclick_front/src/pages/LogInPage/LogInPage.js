@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import axios from "axios";
 
 //------------------------@start import scss link --------------------------------------------------------------
 import "../LogInPage/LogInPage.scss";
@@ -7,13 +8,48 @@ import "../LogInPage/LogInPage.scss";
 class LogInPage extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      email: [],
+      password: []
+    };
   }
+
+  // -----------------------------@start handleChange of  user input ----------------------
+  handleChange = e => {
+    this.setState({ [e.target.name]: e.target.value }, () => {
+      console.log("handlechange below");
+      console.log(this.state);
+    });
+  };
+  // -----------------------------@end handleChange of user input ----------------------
+
+  // -----------------------------@start handleSubmit to fetch login api ----------------------------------
+  handleSubmit = e => {
+    e.preventDefault();
+    console.log("email in handleSubmit post api");
+    console.log(this.state.email);
+    axios // api to post user
+      .post("http://127.0.0.1:8000/api/login", {
+        email_param: this.state.email,
+        password_param: this.state.password
+      })
+      .then(res => {
+        console.log("Response in post api");
+        console.log(res.data);
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+  };
+  // -----------------------------@end handleSubmit to fetch login api ----------------------------
   render() {
     return (
       <div className="LogInPage">
         {/* ------------------------------@start Login Form ----------------------------------------------------------- */}
-        <form className="text-center border border-light p-5" action="#!">
+        <form
+          className="text-center border border-light p-5"
+          onSubmit={this.handleSubmit}
+        >
           <p class="h4 mb-4">Sign in</p>
 
           {/* ---------------------@start Email------------- */}
@@ -23,6 +59,7 @@ class LogInPage extends Component {
             id="defaultLoginFormEmail"
             className="form-control mb-4"
             placeholder="E-mail"
+            onChange={this.handleChange}
           />
           {/* ---------------------@end Email------------- */}
 
@@ -33,6 +70,7 @@ class LogInPage extends Component {
             id="defaultLoginFormPassword"
             className="form-control mb-4"
             placeholder="Password"
+            onChange={this.handleChange}
           />
           {/* ---------------------@end Password------------- */}
 

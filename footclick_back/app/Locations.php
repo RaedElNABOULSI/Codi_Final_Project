@@ -11,7 +11,7 @@ class Locations extends Model
      *
      * @var string
      */
-    protected $table = 'location';
+    protected $table = 'Location';
 
        /**
      * The attributes that are mass assignable.

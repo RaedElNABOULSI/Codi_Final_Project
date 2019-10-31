@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Collection;
 use App\Stadiums;
+use App\User;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -30,23 +31,47 @@ Route::resource('stadium','StadiumController');
 Route::resource('teamreq','TeamRequestController');
 Route::resource('testimonial','TestimonialController');
 Route::resource('trait','TraitController');
+Route::resource('location','LocationController'); // locations
 Route::resource('user','UsersController'); // Users registration
 // -------------------------------@end api resources -------------------------------------------------------
 
 
-// -------------------------------@start filter/sort stadium--------------------------------------------------
+// -----------@start filter/sort stadium--------------------------------
                               
 Route::get('filter_sort', 'StadiumController@filter') ;
                                
-// -------------------------------@end filter/sort stadium-----------------------------------------------
+// -----------@end filter/sort stadium----------------------------------
 
-// -------------------------------@start Send Mail -----------------------------------------------------------------
+// --------------------@start Send Mail --------------------------------------------
 Route::get('/send/email', 'HomeController@mail');          
-// -------------------------------@end Send Mail ------------------------------------------------------------------
+// --------------------@end Send Mail -----------------------------------------------
 
 
 // -------------------------------@start Login -----------------------------------------------------------------
-                                // here is the login function
+Route::post('login',function (LoginRequest $request) {
+   
+    if(count(User::where('email', $request->email)->get()) > 0){
+       $user = User::where('email', $request->email)->first();
+       $auth = Hash::check($request->password, $user->password);
+       if($user && $auth){
+    
+          $user->rollApiKey(); //Model Function
+    
+          return response(array(
+             'currentUser' => $user,
+             'message' => 'Authorization Successful!',
+          ));
+       }
+       return [
+          'id'=> 2,
+          'user'=>$user,
+          'pass'=>$auth
+       ];
+    }
+    return response(array(
+       'message' => 'Unauthorized, check your credentials.',
+    ), 401);
+});
 // -------------------------------@end Login ------------------------------------------------------------------
 
 

@@ -10,20 +10,55 @@ class SignUpPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: [],
       email: [],
       password: [],
       footclickName: [],
+      age: [],
       footSelected: [],
       height: [],
       locationSelected: [],
       positionSelected: [],
-      traitSelected: []
+      traitSelected: [],
+      locations: [],
+      traits: [],
+      positions: []
     };
   }
+
+  //------------------------ @start Fetching ----------------------------------------------------------------------------
+  componentDidMount() {
+    //------------------------ @start Locations fetching ------------------------------
+    axios.get("http://127.0.0.1:8000/api/location").then(res => {
+      console.log("response after fetching locations");
+      console.log(res.data);
+      this.setState({ locations: res.data });
+    });
+    //------------------------ @end Locations fetching -------------------------------
+
+    //------------------------ @start Positions fetching ------------------------------
+    axios.get("http://127.0.0.1:8000/api/position").then(res => {
+      console.log("response after fetching position");
+      console.log(res.data);
+      this.setState({ positions: res.data });
+    });
+    //------------------------ @end Positions fetching -------------------------------
+
+    //------------------------ @start Traits fetching ------------------------------
+    axios.get("http://127.0.0.1:8000/api/trait").then(res => {
+      console.log("response after fetching trait");
+      console.log(res.data);
+      this.setState({ traits: res.data });
+    });
+    //------------------------ @end Traits fetching -------------------------------
+  }
+  //------------------------ @end Fetching ----------------------------------------------------------------------------
+
   // -----------------------------@start handleChange of new user input ----------------------------------------------------
   handleChange = e => {
-    this.setState({ [e.target.name]: e.target.value });
+    this.setState({ [e.target.name]: e.target.value }, () => {
+      console.log("handlechange below");
+      console.log(this.state);
+    });
   };
   // -----------------------------@end handleChange of new user input ----------------------------------------------------
 
@@ -37,6 +72,7 @@ class SignUpPage extends Component {
         email_param: this.state.email,
         password_param: this.state.password,
         footClickName_param: this.state.footclickName,
+        age_param: this.state.age,
         footSelected_param: this.state.footSelected,
         height_param: this.state.height,
         locationSelected_param: this.state.locationSelected,
@@ -45,7 +81,7 @@ class SignUpPage extends Component {
       })
       .then(res => {
         console.log("Response in post api");
-        console.log(res);
+        console.log(res.data);
       })
       .catch(function(error) {
         console.log(error);
@@ -105,7 +141,15 @@ class SignUpPage extends Component {
             </div>
           </div>
           {/* ---------------------------------------@end Footclick name ------------------------------------------------ */}
-
+          {/* ---------------------------------------@start AGE-------------------------------------------- */}
+          <input
+            type="date"
+            class="form-control mb-4"
+            name="age"
+            onChange={this.handleChange}
+            required
+          />
+          {/* ---------------------------------------@end AGE-------------------------------------------- */}
           {/* ---------------------------------------@start Foot-------------------------------------------- */}
           <div className="form-row mb-4">
             <div className="col">
@@ -138,11 +182,11 @@ class SignUpPage extends Component {
                 <option value="default" selected="selected">
                   Choose your Location
                 </option>
-                <option value="North Lebanon">North Lebanon</option>
-                <option value="Mount Lebanon">Mount Lebanon</option>
-                <option value="Beirut">Beirut</option>
-                <option value="South Lebanon">South Lebanon</option>
-                <option value="Bekaa">Bekaa</option>
+                {/* ---------------------------------------@start Location mapping-------------------------------------------- */}
+                {this.state.locations.map(item => (
+                  <option value={item.location}>{item.location}</option>
+                ))}
+                {/* ---------------------------------------@end Location mapping-------------------------------------------- */}
               </select>
             </div>
           </div>
@@ -161,10 +205,9 @@ class SignUpPage extends Component {
                   onChange={this.handleChange}
                   required
                 >
-                  <option value="Goalkeeper">Goalkeeper</option>
-                  <option value="Defender">Defender</option>
-                  <option value="Midfielder">Midfielder</option>
-                  <option value="Attacker">Attacker</option>
+                  {this.state.positions.map(item => (
+                    <option value={item.position}>{item.position}</option>
+                  ))}
                 </select>
               </FormGroup>
             </div>
@@ -176,7 +219,7 @@ class SignUpPage extends Component {
             <div className="col">
               <FormGroup>
                 <Label for="SelectMulti">Choose your Trait</Label>
-                <Input
+                <select
                   type="select"
                   name="traitSelected"
                   id="SelectMulti"
@@ -184,13 +227,10 @@ class SignUpPage extends Component {
                   multiple
                   required
                 >
-                  <option value="Speedster">Speedster</option>
-                  <option value="Dribbler">Dribbler</option>
-                  <option value="Playmaker">Playmaker</option>
-                  <option value="Engine">Engine</option>
-                  <option value="Strength">Strength</option>
-                  <option value="Clinical Finisher">Clinical Finisher</option>
-                </Input>
+                  {this.state.traits.map(item => (
+                    <option value={item.trait}>{item.trait}</option>
+                  ))}
+                </select>
               </FormGroup>
             </div>
           </div>
