@@ -3,12 +3,17 @@ import React, { Component } from "react";
 //------------------------ @start import pages ---------------------------------------------------------------------------
 import LandingPage_User from "./pages/LandingPage_User/LandingPage_User";
 import AboutPage from "./pages/AboutPage/AboutPage";
+import AboutPage_Player from "./pages/AboutPage_Player/AboutPage_Player";
 import BestGoalsPage_User from "./pages/BestGoalsPage_User/BestGoalsPage_User";
+import BestGoalsPage_Player from "./pages/BestGoalsPage_Player/BestGoalsPage_Player";
 import ContactPage from "./pages/ContactPage/ContactPage";
 import StadiumPage_User from "./pages/StadiumPage_User/StadiumPage_User";
+import StadiumPage_Player from "./pages/StadiumPage_Player/StadiumPage_Player";
+import ContactPage_Player from "./pages/ContactPage_Player/ContactPage_Player";
 import SignUpPage from "./pages/SignUpPage/SignUpPage";
 import LogInPage from "./pages/LogInPage/LogInPage";
 import LandingPage_Player from "./pages/LandingPage_Player/LandingPage_Player";
+import PlayersPage from "./pages/PlayersPage/PlayersPage";
 //------------------------ @end import pages ---------------------------------------------------------------------------
 
 import { Route, Switch } from "react-router-dom";
@@ -33,6 +38,20 @@ class App extends Component {
           <Route path="/register" render={() => <SignUpPage />} />
           <Route path="/login" render={() => <LogInPage />} />
           <Route path="/landing_player" render={() => <LandingPage_Player />} />
+          <Route path="/playersPage" render={() => <PlayersPage />} />
+          <Route
+            path="/contactus_player"
+            render={() => <ContactPage_Player />}
+          />
+          <Route
+            path="/stadiums_player"
+            render={() => <StadiumPage_Player />}
+          />
+          <Route path="/about_player" render={() => <AboutPage_Player />} />
+          <Route
+            path="/bestgoals_player"
+            render={() => <BestGoalsPage_Player />}
+          />
         </Switch>
       </div>
     );

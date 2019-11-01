@@ -1,0 +1,52 @@
+.StadiumPage_Player {
+  .Filters {
+    // background-color: aqua;
+    padding-top: 2rem;
+    margin-left: 65rem;
+    img {
+      height: 2rem;
+      width: 2rem;
+    }
+    .button {
+      height: 2rem;
+      width: 5rem;
+    }
+  }
+  .StadiumHeader {
+    padding-top: 8rem;
+    text-align: center;
+    padding-bottom: 2rem;
+  }
+  .Horizontal_Line {
+    border: 1px solid black;
+    width: 30%;
+    margin: 0 auto;
+  }
+  .Content_GridParent {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+    margin-top: 3rem;
+    .Content_GridChildLeft {
+      // background-color: aquamarine;
+      width: 100%;
+      text-align: center;
+      margin-left: 2rem;
+      img {
+        height: 15rem;
+        width: 25rem;
+      }
+    }
+    .Content_GridChildRight {
+      // background-color: green;
+      width: 100%;
+      padding-top: 1rem;
+      padding-left: 10rem;
+      grid-column: span 2;
+      font-family: "Courier New", Courier, monospace;
+      font-size: 1.3rem;
+    }
+    .Content_GridChildRight_Two {
+      margin-top: 5rem;
+    }
+  }
+}

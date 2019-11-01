@@ -16,12 +16,12 @@ class BestGoalController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-    //------------------------@start Get videos of all the best goals -------------------------------------------
-           $bestGoals = BestGoals::all();
-           return   $bestGoals ;
-     //------------------------@end Get videos of all the best goals --------------------------------------------
+    public function index()   {
+    
+   
+        $bestGoals = BestGoals::all();
+        return   $bestGoals ;
+    
     }
 
 

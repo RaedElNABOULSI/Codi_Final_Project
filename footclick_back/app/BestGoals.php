@@ -11,7 +11,7 @@ class BestGoals extends Model
      *
      * @var string
      */
-    protected $table = 'BestGoal';
+    protected $table = 'GoalFootage';
 
         /**
      * The attributes that are mass assignable.
@@ -19,7 +19,7 @@ class BestGoals extends Model
      * @var array
      */
     protected $fillable = [
-        'video','description','player_id','added_on'
+        'footclick_name','image'
     ];
-    public $timestamps = false;
+
 }

@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 
 //------------------------ @start import components ------------------------------------------------------------------
-import NavBar from "../../components/NavBar/NavBar";
-import HeroSection_User from "../../components/HeroSection_User/HeroSection_User";
+import NavBarPlayer from "../../components/NavbarPlayer/NavbarPlayer";
+import HeroSection_Player from "../../components/HeroSection_Player/HeroSection_Player";
 import Testimonial from "../../components/Testimonial/Testimonial";
 import Services from "../../components/Services/Services";
 import Footer from "../../components/Footer/Footer";
@@ -19,8 +19,8 @@ class LandingPage_Player extends Component {
   render() {
     return (
       <div className="LandingPage_Player">
-        <NavBar />
-        <HeroSection_User />
+        <NavBarPlayer />
+        <HeroSection_Player />
         <Testimonial />
         <Services />
         <Footer />

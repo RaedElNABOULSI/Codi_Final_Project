@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import axios from "axios";
 //------------------------ @start import components ----------------------------------------------------------------
 import NavBar from "../../components/NavBar/NavBar";
 import Footer from "../../components/Footer/Footer";
@@ -10,8 +11,18 @@ import "../BestGoalsPage_User/BestGoalsPage_User.scss";
 class BestGoalsPage_User extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = { data: [] };
   }
+
+  //------------------------ @start Fetching goal footage----------------------------------------------------------------------------
+  componentDidMount() {
+    axios.get("http://127.0.0.1:8000/api/bestgoal").then(res => {
+      console.log(res.data);
+      this.setState({ data: res.data });
+    });
+  }
+  //------------------------ @end Fetching goal gootage ----------------------------------------------------------------------------
+
   render() {
     return (
       <div className="BestGoalsPage_User">
@@ -20,17 +31,18 @@ class BestGoalsPage_User extends Component {
           <h1>Discover our Highlights</h1>
           <hr className="Horizontal_Line" />
           {/* --------------------------@start grid container--------------------------------------------- */}
-          <div className="BestGoalsPage_User_Content_Videos">
-            {/* --------------------------@start grid child--------------------------------------------- */}
-            <div className="BestGoalsPage_User_Content_Videos_Elements">
-              <div class="embed-responsive embed-responsive-16by9">
-                <iframe
-                  class="embed-responsive-item"
-                  src="https://www.youtube.com/embed/v64KOxKVLVg"
-                ></iframe>
+          <div className="Parent_Grid">
+            {/* ------------------------ @start mapping of goal footages ---------------------------------------------- */}
+            {this.state.data.map(item => (
+              <div className="Child_Grid">
+                <img src={item.image} alt="error" />
+                {/* <h3>{item.name}</h3> */}
+                <p>
+                  <strong>Scored by: </strong> {item.footclick_name}
+                </p>
               </div>
-            </div>
-            {/* --------------------------@end grid child--------------------------------------------- */}
+            ))}
+            {/* ------------------------ @end mapping of goal footages ---------------------------------------------- */}
           </div>
           {/* --------------------------@end grid container--------------------------------------------- */}
         </div>

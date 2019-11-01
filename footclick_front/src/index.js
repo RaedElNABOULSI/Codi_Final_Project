@@ -10,6 +10,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 
 // ------------------@start import Bootstrap css-------------------------------------------------
 import "bootstrap/dist/css/bootstrap.min.css";
+import "mdbreact/dist/css/mdb.css";
 // ------------------@end import Bootstrap css-------------------------------------------------
 
 ReactDOM.render(
