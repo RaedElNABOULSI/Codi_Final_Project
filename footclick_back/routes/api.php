@@ -32,7 +32,7 @@ Route::resource('teamreq','TeamRequestController');
 Route::resource('testimonial','TestimonialController');
 Route::resource('trait','TraitController');
 Route::resource('location','LocationController'); // locations
-Route::resource('user','UsersController'); // Users registration
+Route::resource('user','UsersController'); // Users 
 // -------------------------------@end api resources -------------------------------------------------------
 
 
@@ -75,6 +75,6 @@ Route::post('login',function (LoginRequest $request) {
 // -------------------------------@end Login ------------------------------------------------------------------
 
 
-// -------------------------------@start UPLOAD -----------------------------------------------------------------
-                               // here is the UPLOAD FUNCTION 
-// -------------------------------@end UPLOAD ------------------------------------------------------------------
+// -------------------------------@start UPLOAD GOAL FOOTAGE -----------------------------------------------------------------
+Route::post('fileupload', 'UploadFileController@store');
+// -------------------------------@end UPLOAD GOAL FOOTAGE ------------------------------------------------------------------

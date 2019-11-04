@@ -25,10 +25,14 @@ class UsersController extends Controller  {
      * @return \Illuminate\Http\Response
      */
     public function index()  {
-
-          $user = User::all();
-          return   $user ;
-
+      $user = User::join('Location', 'users.location_id', '=', 'Location.id')
+                              ->join('Player_Position', 'users.id', '=', 'Player_Position.player_id')
+                              ->join('Position', 'Player_Position.position_id', '=', 'Position.id')
+                              ->join('Player_Trait', 'users.id', '=', 'Player_Trait.player_id')
+                              ->join('Trait', 'Player_Trait.trait_id', '=', 'Trait.id')
+                              ->select('users.footclick_name','users.age','users.foot','users.height', 'Location.location','Position.position','Trait.trait')
+                              ->get();
+      return   $user ;
      }
 
 

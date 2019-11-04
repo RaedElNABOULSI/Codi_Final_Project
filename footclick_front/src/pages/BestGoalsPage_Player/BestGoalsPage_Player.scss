@@ -1,10 +1,12 @@
-//---------------------------------@start bestGoalspage_User-----------------------------------
+//---------------------------------@start bestGoalspage_Player-----------------------------------
 .BestGoalsPage_Player {
   .BestGoalsPage_User_Content {
     padding-top: 10rem;
     height: 40rem;
     // background-color: pink;
-
+    .fileUpload {
+      margin-top: 2rem;
+    }
     h1 {
       text-align: center;
       padding-bottom: 2rem;
@@ -14,17 +16,19 @@
       width: 40%;
       margin: 0 auto;
     }
-  }
-  .BestGoalsPage_User_Content_Videos {
-    margin-top: 5rem;
-    .embed-responsive-item {
-      width: 30rem;
-      height: 15rem;
+    .Parent_Grid {
+      margin-top: 3rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(10rem, 2fr));
+      grid-gap: 7rem;
+      p {
+        width: 100%;
+      }
+      img {
+        width: 20rem;
+        height: 15rem;
+      }
     }
   }
-
-  .embed-responsive-16by9 {
-    height: 20rem;
-  }
 }
-//---------------------------------@end bestGoalspage_User-----------------------------------
+//---------------------------------@end bestGoalspage_PLayer-----------------------------------
