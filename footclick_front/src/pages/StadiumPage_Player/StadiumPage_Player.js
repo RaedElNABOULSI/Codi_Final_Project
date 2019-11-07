@@ -127,9 +127,8 @@ class StadiumPage_Player extends Component {
         {/* ------------------------ @end mapping of Stadiums---------------------------------------------- */}
 
         {/* ------------------------ @end GridParent---------------------------------------------- */}
-        <div className="Footer_StadiumPage_User">
-          <Footer />
-        </div>
+
+        <Footer />
       </div>
     );
   }

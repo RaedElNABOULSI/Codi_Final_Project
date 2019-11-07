@@ -2,14 +2,6 @@
 
 //-----------------------------------------------@start Header---------------------------------------------------------------
 .Header {
-  height: 90px;
-  background: #34495ee7;
-
-  z-index: 5;
-  color: #fff;
-  position: fixed;
-  width: 100%;
-  margin: 0 auto;
   img {
     height: 6.25rem;
   }
@@ -70,6 +62,14 @@
     visibility: hidden;
     z-index: -1111;
   }
+  height: 90px;
+  background: #34495ee7;
+
+  z-index: 5;
+  color: #fff;
+  position: fixed;
+  width: 100%;
+  margin: 0 auto;
 }
 //-----------------------------------------------@end Header---------------------------------------------------------------
 

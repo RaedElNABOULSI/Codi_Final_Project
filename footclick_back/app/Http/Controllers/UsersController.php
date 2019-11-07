@@ -133,8 +133,6 @@ class UsersController extends Controller  {
      */
     public function update($id,Request $request)   {
 
-         
-        
           $user=User::find($id);                                                                     // update by id
 
           $email = $request->get('email');                                                 // validate email input
@@ -174,4 +172,44 @@ class UsersController extends Controller  {
           $user->delete();                         // delete a user record
 
     }
+
+    /**
+     * Display FILTERED players/users according to Host conditions
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function filter(Request $request)  {
+      $ageMin=$request->get('ageMin_param');
+      $ageMax=$request->get('ageMax_param');
+      $position=$request->get('position_param');
+      $location=$request->get('location_param');
+
+      // return all positions
+      if ($position=='Any'){
+            $userInfoFiltered= User::join('Location', 'users.location_id', '=', 'Location.id')
+            ->join('Player_Position', 'users.id', '=', 'Player_Position.player_id')
+            ->join('Position', 'Player_Position.position_id', '=', 'Position.id')
+            ->join('Player_Trait', 'users.id', '=', 'Player_Trait.player_id')
+            ->join('Trait', 'Player_Trait.trait_id', '=', 'Trait.id')
+            ->select('users.footclick_name','users.age','users.foot','users.height', 'Location.location','Position.position','Trait.trait')
+            ->whereBetween('age', [$ageMin, $ageMax])
+            ->where('location',$location)
+            ->get();
+            return   $userInfoFiltered; 
+      }
+       // return specific positions
+      else{
+            $userInfoFiltered= User::join('Location', 'users.location_id', '=', 'Location.id')
+            ->join('Player_Position', 'users.id', '=', 'Player_Position.player_id')
+            ->join('Position', 'Player_Position.position_id', '=', 'Position.id')
+            ->join('Player_Trait', 'users.id', '=', 'Player_Trait.player_id')
+            ->join('Trait', 'Player_Trait.trait_id', '=', 'Trait.id')
+            ->select('users.footclick_name','users.age','users.foot','users.height', 'Location.location','Position.position','Trait.trait')
+            ->whereBetween('age', [$ageMin, $ageMax])
+            ->where('position',$position)
+            ->where('location',$location)
+            ->get();
+            return   $userInfoFiltered; 
+      }
+     }
 }

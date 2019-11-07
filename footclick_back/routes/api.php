@@ -35,6 +35,11 @@ Route::resource('location','LocationController'); // locations
 Route::resource('user','UsersController'); // Users 
 // -------------------------------@end api resources -------------------------------------------------------
 
+// -----------@start FILTER players according to HOST cdts--------------------------------
+                              
+Route::get('filterPlayers', 'UsersController@filter') ;
+                               
+// -----------@end FILTER players according to HOST cdts----------------------------------
 
 // -----------@start filter/sort stadium--------------------------------
                               

@@ -23,9 +23,6 @@
     margin: 0 auto;
   }
   .Content_GridParent {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
-    margin-top: 3rem;
     .Content_GridChildLeft {
       // background-color: aquamarine;
       width: 100%;
@@ -48,5 +45,8 @@
     .Content_GridChildRight_Two {
       margin-top: 5rem;
     }
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+    margin-top: 3rem;
   }
 }

@@ -1,10 +1,5 @@
 //------------------------ @start Footer Section----------------------------------------------------------------
 .Footer {
-  border-top: solid rgb(92, 87, 87);
-  background-color: rgba(156, 133, 133, 0.253);
-  padding-top: 2rem;
-  margin-top: 4rem;
-  height: 14.5rem;
   p {
     padding-top: 3rem;
     text-align: center;
@@ -27,6 +22,11 @@
       color: #f783ac;
     }
   }
+  border-top: solid rgb(92, 87, 87);
+  background-color: rgba(156, 133, 133, 0.253);
+  padding-top: 2rem;
+  margin-top: 4rem;
+  height: 14.5rem;
 }
 
 //------------------------ @end Footer Section----------------------------------------------------------------

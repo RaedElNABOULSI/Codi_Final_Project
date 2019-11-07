@@ -3,15 +3,9 @@
   .PlayersPage_Content {
     // pageContent
     padding-top: 8rem;
-    height: 40rem;
-    margin-bottom: 12rem;
   }
   //-----@start Tab----------------------------
-
   .tab {
-    overflow: hidden;
-    border: 1px solid #ccc;
-
     .TabList {
       text-align: center;
       font-style: oblique;
@@ -20,22 +14,37 @@
     //-----@start Players Tab--------------------------------------------------------------
 
     .TabPanelPlayers {
+      //-----@start Grid Child Style--------------------------------------------------------------
       ul {
         li {
           margin-top: 0.5rem;
-
           font-family: "Courier New", Courier, monospace;
           font-size: 1.2rem;
         }
+        //child middle
         list-style: none;
-        margin-left: -15rem;
+        width: 29rem;
       }
       img {
-        margin-left: 2rem;
+        //child left
+        margin-left: 5rem;
+        width: 10rem;
+        height: 10rem;
       }
+      //-----@start INVITE button------
+      .lead {
+        //child right
+        padding-top: 5rem;
+      }
+      //-----@end INVITE button------
+
+      //-----@end Grid Child Style--------------------------------------------------------------
+      //-----@start Grid Parent Style--------------------------------------------------------------
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(10px, 1fr));
+      grid-template-columns: repeat(3, minmax(250px, 1fr));
       margin-top: 3rem;
+
+      //-----@end Grid Parent Style--------------------------------------------------------------
     }
     //-----@end Players Tab--------------------------------------------------------------
 
@@ -43,6 +52,10 @@
     .jumbotron {
       padding: 1rem 8rem 1rem 8rem;
     }
+    #preferredLocation {
+      margin-top: 1rem;
+    }
+
     //-----@start HEADER--------------------------------------------------------------
     .display-3 {
       font-size: 2.5rem;
@@ -51,11 +64,10 @@
     //-----@end HEADER--------------------------------------------------------------
 
     //-----@end HOST Tab--------------------------------------------------------------
+    overflow: hidden;
+    border: 1px solid #ccc;
   }
   //-----@end Tab----------------------------
-  .Footer_PlayersPage {
-    margin-top: 5rem;
-  }
 }
 
 //---------------------------------@end PlayersPage-----------------------------------
