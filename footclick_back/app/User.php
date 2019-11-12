@@ -2,6 +2,7 @@
 
 namespace App;
 
+
 use Illuminate\Support\Str;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -50,7 +51,7 @@ class User extends Authenticatable
     public function rollApiKey(){
         do{
            $this->api_token =Str::random(60);
-        }while(User::   where('api_token', $this->api_token)->exists());
+        }while($this->where('api_token', $this->api_token)->exists());
         $this->save();
      }
 }

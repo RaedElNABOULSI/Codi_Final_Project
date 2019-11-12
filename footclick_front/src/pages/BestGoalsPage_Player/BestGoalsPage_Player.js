@@ -83,11 +83,9 @@ class BestGoalsPage_Player extends Component {
             {this.state.data.map(item => (
               <div className="Child_Grid">
                 <img
-                  src="http://127.0.0.1:8000/images/1572728859.jpeg"
+                  src={`http://127.0.0.1:8000/images/${item.image}`}
                   alt="error"
                 />
-
-                {/* <img src={require(`http://127.0.0.1:8000/images/${item.image}`)} alt="error" /> */}
 
                 <p>
                   <strong>Scored by: </strong> {item.footclick_name}

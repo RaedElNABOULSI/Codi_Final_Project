@@ -1,9 +1,11 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Eloquent\Collection;
 use App\Stadiums;
 use App\User;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -33,6 +35,7 @@ Route::resource('testimonial','TestimonialController');
 Route::resource('trait','TraitController');
 Route::resource('location','LocationController'); // locations
 Route::resource('user','UsersController'); // Users 
+Route::resource('role','RoleController'); // roles
 // -------------------------------@end api resources -------------------------------------------------------
 
 // -----------@start FILTER players according to HOST cdts--------------------------------
@@ -53,18 +56,16 @@ Route::get('/send/email', 'HomeController@mail');
 
 
 // -------------------------------@start Login -----------------------------------------------------------------
-Route::post('login',function (LoginRequest $request) {
+Route::post('login',function (Request $request) {
    
-    if(count(User::where('email', $request->email)->get()) > 0){
-       $user = User::where('email', $request->email)->first();
-       $auth = Hash::check($request->password, $user->password);
+    if(count(User::where('email', $request->email_param)->get()) > 0){
+       $user = User::where('email', $request->email_param)->first();
+       $auth = Hash::check($request->password_param, $user->password);
        if($user && $auth){
-    
           $user->rollApiKey(); //Model Function
-    
           return response(array(
              'currentUser' => $user,
-             'message' => 'Authorization Successful!',
+             'message' => 'Login Successful!',
           ));
        }
        return [

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
-
+import { Redirect } from "react-router-dom";
 //------------------------@start import scss link --------------------------------------------------------------
 import "../LogInPage/LogInPage.scss";
 //------------------------@end import scss link  --------------------------------------------------------
@@ -8,34 +8,33 @@ import "../LogInPage/LogInPage.scss";
 class LogInPage extends Component {
   constructor(props) {
     super(props);
+    this.handleSubmit = this.handleSubmit.bind(this);
     this.state = {
       email: [],
-      password: []
+      password: [],
+      redirectLanding: false
     };
   }
 
   // -----------------------------@start handleChange of  user input ----------------------
   handleChange = e => {
-    this.setState({ [e.target.name]: e.target.value }, () => {
-      console.log("handlechange below");
-      console.log(this.state);
-    });
+    this.setState({ [e.target.name]: e.target.value });
   };
   // -----------------------------@end handleChange of user input ----------------------
 
   // -----------------------------@start handleSubmit to fetch login api ----------------------------------
   handleSubmit = e => {
     e.preventDefault();
-    console.log("email in handleSubmit post api");
-    console.log(this.state.email);
     axios // api to post user
       .post("http://127.0.0.1:8000/api/login", {
         email_param: this.state.email,
         password_param: this.state.password
       })
       .then(res => {
-        console.log("Response in post api");
-        console.log(res.data);
+        console.log("Response in post api", res.data);
+        // authenticated
+        this.props.setUser(res.data);
+        this.setState({ redirectLanding: !this.state.redirectLanding });
       })
       .catch(function(error) {
         console.log(error);
@@ -43,6 +42,9 @@ class LogInPage extends Component {
   };
   // -----------------------------@end handleSubmit to fetch login api ----------------------------
   render() {
+    if (this.state.redirectLanding) {
+      return <Redirect to="/landing_player" />;
+    }
     return (
       <div className="LogInPage">
         {/* ------------------------------@start Login Form ----------------------------------------------------------- */}

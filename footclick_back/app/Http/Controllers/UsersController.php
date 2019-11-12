@@ -11,6 +11,7 @@ use App\Positions;
 use App\Locations;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 /**
  * @group User management
@@ -43,91 +44,57 @@ class UsersController extends Controller  {
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)  { 
-
-          //----------------------------@start get params/body registration values -------------------------------------
-
-          $email=$request->email_param;                                         // get email value
-          $password=$request->password_param;                         // get password value
-          $footclickName=$request->footClickName_param;    // get footclick name value
-          $age=$request->age_param;                                               // get age value
-          $foot=$request->footSelected_param;                          // get foot value
-          $height=$request->height_param;                                  // get height value
-          $location=$request->locationSelected_param;          // get location value
-          $position=$request->positionSelected_param;         // get position value
-          $trait=$request->traitSelected_param;                        // get trait value
-
-          //----------------------------@end get params/body registration values ------------------------------------------
-
-          //---- -----------------------@start create a new instance of the model  ------------------------------------------
-
+          // --- Get Input request ---------
+          $email=$request->email_param;                                 
+          $password=$request->password_param;                         
+          $footclickName=$request->footClickName_param;    
+          $age=$request->age_param;                                     
+          $foot=$request->footSelected_param;                          
+          $height=$request->height_param;       
+          $locationId=$request->locationIdSelected_param;                
+          $positionId=$request->positionIdSelected_param;         
+          $traitIds=$request->traitIdSelected_param;     // array of trait ids
+          //---Insert  into 'users' table in database 
           $user = new User; 
+          $user->email =  $email;                                      
+          $user->password =   Hash::make( $password);                      
+          $user->footclick_name = $footclickName;  
+          $user->age =  $age;                                          
+          $user->foot =    $foot;                            
+          $user->height =  $height;                          
+          $user->location_id =   $locationId;                
+          $user->save();   
+          //---Insert  into 'Player_Position' table in database 
           $playerPosition=new PlayerPositions;
-          $trait=new Traits;
-          $playerTrait=new PlayerTrait;
+          $playerPosition->position_id=$positionId;
+          $playerPosition->player_id = User::where('footclick_name', $footclickName)->value('id');
+          $playerPosition->save();
+          //---Insert  into 'Player_Trait' table in database 
+          foreach($traitIds as $traitId){
+            $playerTrait = new PlayerTrait; // new row
+            $playerTrait->trait_id = $traitId;
+            $playerTrait->player_id=User::where('footclick_name', $footclickName)->value('id');
+            $playerTrait->save();
+          }
+          //---Insert  into 'User_Role' table in database 
           $userRole=new UserRoles;
-
-          //--- ----- - ----------- -@end create a new instance of the model  -----------------------------------------------
-
-          //------------------------@start INSERT INTO 'users' table---------------------------------------------------------------
-
-          $user->email =  $email;                                       // validate email input
-          $user->password =   $password;                      // validate password input
-          $user->footclick_name = $footclickName;   // validate footclick name input
-          $user->age =  $age;                                             // validate age input
-          $user->foot =    $foot;                                        // validate foot input
-          $user->height =  $height;                                 // validate height input
-          $user->location_id =   $locationId;                // validate location id input
-
-          //------------------------@end INSERT INTO 'users' table-----------------------------------------------------
-
-          //------------------------@start INSERT INTO 'Player_Position' table-------------------------------------
-
-          $playerPosition->position_id = $positionId; // validate position id input
-          $playerPosition->player_id=$playerId; // validate player id 
-
-          //------------------------@end INSERT INTO 'Player_Position' table---------------------------------------
-
-          //----------- ------------@start GET 'id' FIELD FROM 'Location', 'Position', 'Trait', 'users', 'Role' tables----------------
-
-          $locationId = Locations::where('location', $location)->value('id');      // get location id from 'Location' table
-          $positionId =  Positions::where('position', $position)->value('id');     // get position id from 'Position' table
-          $playerId =  User::where('email', $email)->value('id');                            // get player id from 'users' table
-          $traitId =  Traits::where('trait', $trait)->value('id');                                 // get trait id from 'Trait' table
-          $roleId =  Roles::where('role', 'Player')->value('id');                              // get role id from 'Role' table
-
-          //--------------- -------  @end GET 'id' FIELD FROM 'Location', 'Position', 'Trait', 'users', 'Role' tables----------------
-
-          //------------------------@start INSERT INTO 'Player_Trait' table-------------------------------------------
-
-          $playerTrait->trait_id = $traitId;                 // validate trait id input
-          $playerTrait->player_id=$playerId;           // validate player id 
-          
-          //------------------------@end INSERT INTO 'Player_Trait' table---------------------------------------------
-
-
-
-          //------------------------@start INSERT INTO 'User_Role' table-------------------------------------
-
-          $userRole->role_id = $roleId;                  // validate role id input
-          $userRole->user_id=$playerId;               // validate player id in 'User_Role' table
-
-          //------------------------@end INSERT INTO 'User_Role' table-------------------------------------
-
-          $user->save();                                              // insert records to the database
-          $playerPosition->save();                          // insert records to the database
-          $playerTrait->save();                                // insert records to the database
-          $userRole->save();                                   // insert records to the database
-
-          //------------test--------------------
-   
-          //------------test--------------------
+          $userRole->user_id=User::where('footclick_name', $footclickName)->value('id');
+          $userRole->role_id=Roles::where('role', 'Player')->value('id');
+          $userRole->save();
+             //     ---- return success/error message
+           return response()->json([
+             'currentUser' => $footclickName,
+             'message' => 'Registration Successful!',
+             ]);
+            // redirect to Home page
+           
     }
 
 
    /**
-     * Update a user
+     * Update aChooseser
      *
-     * @bodyParam  int  $id
+     * @bodyParChoose  int  $id
      * @bodyParam \Illuminate\Http\Request  $request
      * @return Response
      */
@@ -154,10 +121,7 @@ class UsersController extends Controller  {
           $user->position= $position ;                                                       // assign input request to position record in database
           $user->trait=$trait;                                                                       // assign input request to trait record in database
           $user->role=$role;                                                                        // assign input request to role record in database
-
           $user->save();                                                                                // updates all fields
-
-          
     }  
 
     /**

@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import axios from "axios";
+import getAge from "get-age";
 import { FormGroup, Label, Input } from "reactstrap";
-
+import currentDate from "current-date";
+import { Redirect } from "react-router-dom";
 //------------------------@start import scss link ----------------------------------------------------------------------------
 import "../SignUpPage/SignUpPage.scss";
 //------------------------------------@end import scss link  ----------------------------------------------------------------------------
@@ -16,57 +18,69 @@ class SignUpPage extends Component {
       age: [],
       footSelected: [],
       height: [],
-      locationSelected: [],
-      positionSelected: [],
-      traitSelected: [],
+      locationIdSelected: [],
+      positionIdSelected: [],
+      traitIdSelected: [],
+      roleIdSelected: [],
       locations: [],
       traits: [],
-      positions: []
+      positions: [],
+      roles: [],
+      togglePlayerRole: false,
+      redirectLogin: false
     };
   }
-
-  //------------------------ @start Fetching ----------------------------------------------------------------------------
+  //--- Fetch Locations, Position , Traits and Roles from database
   componentDidMount() {
-    //------------------------ @start Locations fetching ------------------------------
     axios.get("http://127.0.0.1:8000/api/location").then(res => {
-      console.log("response after fetching locations");
-      console.log(res.data);
+      console.log("response after fetching locations", res.data);
       this.setState({ locations: res.data });
     });
-    //------------------------ @end Locations fetching -------------------------------
-
-    //------------------------ @start Positions fetching ------------------------------
     axios.get("http://127.0.0.1:8000/api/position").then(res => {
-      console.log("response after fetching position");
-      console.log(res.data);
+      console.log("response after fetching positions", res.data);
       this.setState({ positions: res.data });
     });
-    //------------------------ @end Positions fetching -------------------------------
-
-    //------------------------ @start Traits fetching ------------------------------
     axios.get("http://127.0.0.1:8000/api/trait").then(res => {
-      console.log("response after fetching trait");
-      console.log(res.data);
+      console.log("response after fetching traits", res.data);
       this.setState({ traits: res.data });
     });
-    //------------------------ @end Traits fetching -------------------------------
+    // axios.get("http://127.0.0.1:8000/api/role").then(res => {
+    //   console.log("response after fetching roles", res.data);
+    //   this.setState({ roles: res.data }, () => {
+    //     console.log("ROLES STATE IS : ", this.state.roles[1].id);
+    //   });
+    // });
   }
-  //------------------------ @end Fetching ----------------------------------------------------------------------------
-
-  // -----------------------------@start handleChange of new user input ----------------------------------------------------
-  handleChange = e => {
-    this.setState({ [e.target.name]: e.target.value }, () => {
-      console.log("handlechange below");
-      console.log(this.state);
+  handleAgeChange = e => {
+    this.setState({ [e.target.name]: getAge(e.target.value) }, () => {
+      console.log("Age is", this.state);
     });
   };
-  // -----------------------------@end handleChange of new user input ----------------------------------------------------
-
-  // -----------------------------@start handleSubmit to insert new user ----------------------------------------------------
+  handleChange = e => {
+    this.setState({ [e.target.name]: e.target.value }, () => {
+      console.log("state in handleChange is", this.state.locationIdSelected);
+    });
+  };
+  handleMultiSelectChange = e => {
+    const options = [...e.target.options];
+    // debugger;
+    const selected_options = options.filter(option => {
+      return option.selected;
+    });
+    this.setState(
+      {
+        [e.target.name]: selected_options.map(option => {
+          return option.value;
+        })
+      },
+      () => {
+        console.log("state in handleMultiSelectChange is ", this.state);
+      }
+    );
+  };
   handleSubmit = e => {
     e.preventDefault();
-    console.log("email in handleSubmit post api");
-    console.log(this.state.email);
+    console.log("state in handleSubmit", this.state);
     axios // api to post user
       .post("http://127.0.0.1:8000/api/user", {
         email_param: this.state.email,
@@ -75,21 +89,25 @@ class SignUpPage extends Component {
         age_param: this.state.age,
         footSelected_param: this.state.footSelected,
         height_param: this.state.height,
-        locationSelected_param: this.state.locationSelected,
-        positionSelected_param: this.state.positionSelected,
-        traitSelected_param: this.state.traitSelected
+        locationIdSelected_param: this.state.locationIdSelected,
+        positionIdSelected_param: this.state.positionIdSelected,
+        traitIdSelected_param: this.state.traitIdSelected
       })
       .then(res => {
-        console.log("Response in post api");
-        console.log(res.data);
+        console.log("RESPONSE in handleSubmit POST api", res.data);
+        // route to loginpage
+        this.setState({ redirectLogin: !this.state.redirectLogin });
       })
       .catch(function(error) {
         console.log(error);
       });
   };
-  // -----------------------------@end handleSubmit to insert new user -----------------------------------------------------------------
 
   render() {
+    console.log("state in handleSubmit", this.state);
+    if (this.state.redirectLogin) {
+      return <Redirect to="/login" />;
+    }
     return (
       <div className="SignUpPage">
         <form
@@ -146,7 +164,8 @@ class SignUpPage extends Component {
             type="date"
             class="form-control mb-4"
             name="age"
-            onChange={this.handleChange}
+            onChange={this.handleAgeChange}
+            max={currentDate("date")}
             required
           />
           {/* ---------------------------------------@end AGE-------------------------------------------- */}
@@ -178,15 +197,17 @@ class SignUpPage extends Component {
           {/* ---------------------------------------@start Location-------------------------------------------- */}
           <div className="form-row mb-4">
             <div className="col">
-              <select name="locationSelected" onChange={this.handleChange}>
-                <option value="default" selected="selected">
-                  Choose your Location
-                </option>
-                {/* ---------------------------------------@start Location mapping-------------------------------------------- */}
+              <select
+                name="locationIdSelected"
+                onChange={this.handleChange}
+                required
+              >
+                <option value="">Choose your Location</option>
+                {/* ---------------------------------------@start Location mapping-------------- */}
                 {this.state.locations.map(item => (
-                  <option value={item.location}>{item.location}</option>
+                  <option value={item.id}>{item.location}</option>
                 ))}
-                {/* ---------------------------------------@end Location mapping-------------------------------------------- */}
+                {/* ---------------------------------------@end Location mapping---------------- */}
               </select>
             </div>
           </div>
@@ -196,19 +217,19 @@ class SignUpPage extends Component {
           <div className="form-row mb-4">
             <div className="col">
               <FormGroup>
-                <Label for="exampleSelectMulti">Choose your Position</Label>
-                <select
+                {/* <Label for="exampleSelectMulti">Choose your Position</Label> */}
+                <Input
                   type="select"
-                  name="positionSelected"
+                  name="positionIdSelected"
                   id="exampleSelectMulti"
-                  multiple
                   onChange={this.handleChange}
                   required
                 >
+                  <option value="">Choose your Position</option>
                   {this.state.positions.map(item => (
-                    <option value={item.position}>{item.position}</option>
+                    <option value={item.id}>{item.position}</option>
                   ))}
-                </select>
+                </Input>
               </FormGroup>
             </div>
           </div>
@@ -221,14 +242,14 @@ class SignUpPage extends Component {
                 <Label for="SelectMulti">Choose your Trait</Label>
                 <select
                   type="select"
-                  name="traitSelected"
+                  name="traitIdSelected"
                   id="SelectMulti"
-                  onChange={this.handleChange}
+                  onChange={this.handleMultiSelectChange}
                   multiple
                   required
                 >
                   {this.state.traits.map(item => (
-                    <option value={item.trait}>{item.trait}</option>
+                    <option value={item.id}>{item.trait}</option>
                   ))}
                 </select>
               </FormGroup>
@@ -250,10 +271,9 @@ class SignUpPage extends Component {
               Subscribe to our newsletter
             </label>
           </div>
-
           {/* <!-- Sign up button --> */}
           <button class="btn btn-info my-4 btn-block" type="submit">
-            Sign in
+            Sign Up
           </button>
           {/* <input type="Submit" value="Sign In" /> */}
           {/* <!-- Social register --> */}

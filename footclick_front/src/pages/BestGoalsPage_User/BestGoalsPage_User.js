@@ -35,7 +35,10 @@ class BestGoalsPage_User extends Component {
             {/* ------------------------ @start mapping of goal footages ---------------------------------------------- */}
             {this.state.data.map(item => (
               <div className="Child_Grid">
-                <img src={item.image} alt="error" />
+                <img
+                  src={`http://127.0.0.1:8000/images/${item.image}`}
+                  alt="error"
+                />
                 {/* <h3>{item.name}</h3> */}
                 <p>
                   <strong>Scored by: </strong> {item.footclick_name}

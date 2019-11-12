@@ -19,6 +19,7 @@ class NavbarPlayer extends Component {
     this.state = {};
   }
   render() {
+    console.log("PROPS IN NAVBAR", this.props.user);
     return (
       <div className="NavbarPlayer">
         {/* ------------------------------------@start Header Logo ------------------------------------------------ */}
@@ -50,7 +51,7 @@ class NavbarPlayer extends Component {
           <div className="Navbar">
             <MDBDropdown>
               <MDBDropdownToggle caret color="primary">
-                Footclick Name
+                {this.props.user.currentUser.footclick_name}
               </MDBDropdownToggle>
               <MDBDropdownMenu basic>
                 <MDBDropdownItem>

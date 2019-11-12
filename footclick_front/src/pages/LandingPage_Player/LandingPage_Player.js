@@ -17,9 +17,13 @@ class LandingPage_Player extends Component {
     this.state = {};
   }
   render() {
+    console.log(
+      "PROPS in LandingPlayer",
+      this.props.user.currentUser.footclick_name
+    );
     return (
       <div className="LandingPage_Player">
-        <NavBarPlayer />
+        <NavBarPlayer user={this.props.user} />
         <HeroSection_Player />
         <Testimonial />
         <Services />

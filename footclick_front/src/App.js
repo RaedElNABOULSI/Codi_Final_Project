@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useCallback } from "react";
 
 //------------------------ @start import pages ---------------------------------------------------------------------------
 import LandingPage_User from "./pages/LandingPage_User/LandingPage_User";
@@ -20,12 +20,25 @@ import { Route, Switch } from "react-router-dom";
 
 //------------------------ @start import scss link ----------------------------------------------------------------------------
 import "./App.scss";
+import { instanceOf } from "prop-types";
 //------------------------@end import scss link ----------------------------------------------------------------------------------------
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    // this.setUser = this.setUser.bind(this);
+    this.state = {
+      user: []
+    };
   }
+  setUser = (
+    user,
+    callback = () => {
+      console.log("PROPS IN APP", this.state);
+    }
+  ) => {
+    this.setState({ user }, callback);
+  };
+
   render() {
     return (
       <div className="Application">
@@ -36,8 +49,16 @@ class App extends Component {
           <Route path="/contactus" render={() => <ContactPage />} />
           <Route path="/stadiums" render={() => <StadiumPage_User />} />
           <Route path="/register" render={() => <SignUpPage />} />
-          <Route path="/login" render={() => <LogInPage />} />
-          <Route path="/landing_player" render={() => <LandingPage_Player />} />
+          <Route
+            path="/login"
+            render={() => <LogInPage setUser={this.setUser} />}
+          />
+          <Route
+            path="/landing_player"
+            render={props => (
+              <LandingPage_Player {...props} user={this.state.user} />
+            )}
+          />
           <Route path="/playersPage" render={() => <PlayersPage />} />
           <Route
             path="/contactus_player"
