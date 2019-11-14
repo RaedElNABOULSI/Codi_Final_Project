@@ -20,11 +20,13 @@ class UploadFileController extends Controller
 
         if($request->get('file'))   {
           $image = $request->get('file');
+          $fname = $request->get('userName');
           $name = time().'.' . explode('/', explode(':', substr($image, 0, strpos($image, ';')))[1])[1];
           \Image::make($request->get('file'))->save(public_path('images/').$name);
         }
         // ---@start insert file to 'GoalFootage' table in database ----
         $fileupload = new BestGoals();
+        $fileupload->footclick_name=$fname;
         $fileupload->image=$name;
         $fileupload->save();
         // ---@end insert file to 'GoalFootage' table in database ----

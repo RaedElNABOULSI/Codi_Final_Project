@@ -19,7 +19,7 @@
     .Parent_Grid {
       margin-top: 3rem;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(10rem, 2fr));
+      grid-template-columns: repeat(3, minmax(10rem, 2fr));
       grid-gap: 7rem;
       p {
         width: 100%;
