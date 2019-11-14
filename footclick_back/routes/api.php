@@ -57,7 +57,6 @@ Route::get('/send/email', 'HomeController@mail');
 
 // -------------------------------@start Login -----------------------------------------------------------------
 Route::post('login',function (Request $request) {
-   
     if(count(User::where('email', $request->email_param)->get()) > 0){
        $user = User::where('email', $request->email_param)->first();
        $auth = Hash::check($request->password_param, $user->password);
@@ -67,12 +66,14 @@ Route::post('login',function (Request $request) {
              'currentUser' => $user,
              'message' => 'Login Successful!',
           ));
+          
        }
        return [
           'id'=> 2,
           'user'=>$user,
           'pass'=>$auth
        ];
+       
     }
     return response(array(
        'message' => 'Unauthorized, check your credentials.',

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-
+import { Redirect } from "react-router-dom";
 //------------------------ @start import components ------------------------------------------------------------------
 import NavBarPlayer from "../../components/NavbarPlayer/NavbarPlayer";
 import HeroSection_Player from "../../components/HeroSection_Player/HeroSection_Player";
@@ -10,6 +10,7 @@ import Footer from "../../components/Footer/Footer";
 
 //------------------------ @start import scss link --------------------------------------------------------
 import "../LandingPage_Player/LandingPage_Player.scss";
+import { exact } from "prop-types";
 //-------------------------- @end import scss link--------------------------------------------------------
 class LandingPage_Player extends Component {
   constructor(props) {
@@ -17,10 +18,6 @@ class LandingPage_Player extends Component {
     this.state = {};
   }
   render() {
-    console.log(
-      "PROPS in LandingPlayer",
-      this.props.user.currentUser.footclick_name
-    );
     return (
       <div className="LandingPage_Player">
         <NavBarPlayer user={this.props.user} />

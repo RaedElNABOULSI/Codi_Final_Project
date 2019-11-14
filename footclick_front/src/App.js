@@ -27,19 +27,18 @@ class App extends Component {
     super(props);
     // this.setUser = this.setUser.bind(this);
     this.state = {
-      user: []
+      AppUser: null
     };
   }
-  setUser = (
-    user,
-    callback = () => {
-      console.log("PROPS IN APP", this.state);
-    }
-  ) => {
-    this.setState({ user }, callback);
+
+  setUser = (AppUser, callback = () => {}) => {
+    //store footclickName in local storage
+    localStorage.setItem("footclickName", AppUser.currentUser.footclick_name);
+    this.setState({ AppUser }, callback);
   };
 
   render() {
+    // console.log("APP js State in render is", this.state);
     return (
       <div className="Application">
         <Switch>
@@ -51,26 +50,30 @@ class App extends Component {
           <Route path="/register" render={() => <SignUpPage />} />
           <Route
             path="/login"
-            render={() => <LogInPage setUser={this.setUser} />}
+            render={() => <LogInPage callbackParent={this.setUser} />}
           />
           <Route
+            exact
             path="/landing_player"
             render={props => (
-              <LandingPage_Player {...props} user={this.state.user} />
+              <LandingPage_Player {...props} user={this.state.AppUser} />
             )}
           />
           <Route path="/playersPage" render={() => <PlayersPage />} />
           <Route
-            path="/contactus_player"
+            path="/landing_player/contact"
             render={() => <ContactPage_Player />}
           />
           <Route
-            path="/stadiums_player"
+            path="/landing_player/stadiums"
             render={() => <StadiumPage_Player />}
           />
-          <Route path="/about_player" render={() => <AboutPage_Player />} />
           <Route
-            path="/bestgoals_player"
+            path="/landing_player/about"
+            render={() => <AboutPage_Player />}
+          />
+          <Route
+            path="/landing_player/bestgoals"
             render={() => <BestGoalsPage_Player />}
           />
         </Switch>

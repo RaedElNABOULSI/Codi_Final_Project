@@ -31,9 +31,14 @@ class LogInPage extends Component {
         password_param: this.state.password
       })
       .then(res => {
-        console.log("Response in post api", res.data);
+        console.log("USER credentials in post api", res.data);
         // authenticated
-        this.props.setUser(res.data);
+        this.props.callbackParent(res.data);
+
+        // save  in local storage
+        localStorage.setItem("api_token", res.data.currentUser.api_token);
+
+        // redirect to Landing
         this.setState({ redirectLanding: !this.state.redirectLanding });
       })
       .catch(function(error) {

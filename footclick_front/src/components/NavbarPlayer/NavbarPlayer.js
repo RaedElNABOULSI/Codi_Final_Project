@@ -16,10 +16,11 @@ import "../NavbarPlayer/NavbarPlayer.scss";
 class NavbarPlayer extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = { dataUser: [] };
   }
+
   render() {
-    console.log("PROPS IN NAVBAR", this.props.user);
+    // console.log("STATE in didMount in navbarplayer IS", this.state);
     return (
       <div className="NavbarPlayer">
         {/* ------------------------------------@start Header Logo ------------------------------------------------ */}
@@ -35,23 +36,24 @@ class NavbarPlayer extends Component {
         </label>
         {/* ------------------------------------@start Navbar links------------------------------------------------ */}
         <ul className="Navbar">
-          <Link to="/stadiums_player" className="Navbar_Link">
+          <Link to="/landing_player/stadiums" className="Navbar_Link">
             Stadiums
           </Link>
-          <Link to="/bestgoals_player" className="Navbar_Link">
+          <Link to="/landing_player/bestgoals" className="Navbar_Link">
             Best Goals
           </Link>
-          <Link to="/about_player" className="Navbar_Link">
+          <Link to="/landing_player/about" className="Navbar_Link">
             About
           </Link>
-          <Link to="/contactus_player" className="Navbar_Link">
+          <Link to="/landing_player/contact" className="Navbar_Link">
             Contact
           </Link>
           {/* ------------------------------------@end Navbar links ------------------------------------------------ */}
           <div className="Navbar">
             <MDBDropdown>
               <MDBDropdownToggle caret color="primary">
-                {this.props.user.currentUser.footclick_name}
+                {/* {this.props.user.currentUser.footclick_name} */}{" "}
+                {localStorage.getItem("footclickName")}
               </MDBDropdownToggle>
               <MDBDropdownMenu basic>
                 <MDBDropdownItem>
