@@ -16,12 +16,9 @@ class BestGoalController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()   {
-    
-   
-        $bestGoals = BestGoals::all();
-        return   $bestGoals ;
-    
+    public function index(){
+      $bestGoals = BestGoals::all();
+      return   $bestGoals ;
     }
 
 
@@ -31,22 +28,13 @@ class BestGoalController extends Controller
      * @bodyParam  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
- //------------------------@start Insert a video of all the best goals -------------------------------------------
-          
-
-     $bestGoals = new BestGoals; // create a new instance of the model
-
-     $bestGoals  ->video = $request->video; // validate video input
-    $bestGoals  ->description = $request->description; // validate description input
-    $bestGoals ->player_id = $request->player_id; // validate player id input
-
-    $bestGoals  ->save(); // insert records to the database
-
-      //------------------------@end Insert a video of all the best goals -------------------------------------------
+    public function store(Request $request){
+      $bestGoals = new BestGoals; 
+      $bestGoals  ->video = $request->video; 
+      $bestGoals  ->description = $request->description; 
+      $bestGoals ->player_id = $request->player_id; 
+      $bestGoals  ->save(); 
     }
-
   /**
      * Update a video goal
      *
@@ -54,41 +42,23 @@ class BestGoalController extends Controller
      * @bodyParam  \Illuminate\Http\Request  $request
      * @return Response
      */
-    public function update($id,Request $request)
-    {
-         //------------------------@start update a video field ---------------------------------------------------
-        
-         $bestGoals  = BestGoals::find($id); // update by id
-
-         $video = $request->get('video'); // validate video input
-         $description= $request->get('description'); // validate description input
-         $player_id= $request->get('player_id'); // validate player id input
- 
- 
-         $bestGoals ->video= $video ; // assign input request to video record in database
-         $bestGoals  ->description = $description; // assign input request to description record in database
-         $bestGoals  ->player_id= $player_id; // assign input request to player id record in database
- 
-         $bestGoals ->save(); // updates all fields
- 
-  //------------------------@end update a video field ---------------------------------------------------
+    public function update($id,Request $request){
+      $bestGoals  = BestGoals::find($id); 
+      $video = $request->get('video'); 
+      $description= $request->get('description'); 
+      $player_id= $request->get('player_id'); 
+      $bestGoals ->video= $video ; 
+      $bestGoals  ->description = $description; 
+      $bestGoals  ->player_id= $player_id; 
     }
-
-
     /**
      * Remove a video goal
      *
      * @bodyParam  \int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-//------------------------@start delete a video field ---------------------------------------------------
-
-        $bestGoals = BestGoals::find($id); // find video by id
-
-        $bestGoals ->delete(); // delete a video record
-
- //------------------------@end delete a video field ---------------------------------------------------
+    public function destroy($id){
+      $bestGoals = BestGoals::find($id); 
+      $bestGoals ->delete(); 
     }
 }

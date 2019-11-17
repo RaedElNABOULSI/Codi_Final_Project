@@ -4,92 +4,71 @@ namespace App\Http\Controllers;
 
 use App\MatchRequests;
 use Illuminate\Http\Request;
-
+/**
+ * @group Player Match Request management
+ *
+ * APIs for managing match requests
+ */
 class MatchRequestController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a match request
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-    //------------------------@start Get all match requests -------------------------------------------
-          $matchRequests = MatchRequests::all();
-          return   $matchRequests ;
-    //------------------------@end Get all match requests  --------------------------------------------
+    public function index(){
+        $matchRequests = MatchRequests::all();
+        return   $matchRequests ;
     }
-
-
-
     /**
-     * Store a newly created resource in storage.
+     * Store a new match request
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request  $request 
+     * @bodyParam status \Illuminate\Http\Request required Match request status
+     * @bodyParam req_host_id \Illuminate\Http\Request required Match request Requested user id
+     * @bodyParam ack_host_id \Illuminate\Http\Request required Match request acknowledged user id
+     * @bodyParam winning_host_id \Illuminate\Http\Request required Match request status winning user id
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-//------------------------@start Insert a match request -------------------------------------------
-          
-
-    $matchRequests = new MatchRequests; // create a new instance of the model
-
-    $matchRequests ->status = $request->status; // validate status input
-    $matchRequests ->req_host_id = $request->req_host_id ; // validate id of host requested input
-    $matchRequests->ack_host_id = $request->ack_host_id; // validate id of host acknowleged input
-    $matchRequests->winning_host_id = $request->winning_host_id; // validate winning host id input
-
-    $matchRequests ->save(); // insert records to the database
-
-//------------------------@end Insert a match request -------------------------------------------
+    public function store(Request $request){
+        $matchRequests = new MatchRequests; 
+        $matchRequests->status = $request->status;
+        $matchRequests->req_host_id = $request->req_host_id ;
+        $matchRequests->ack_host_id = $request->ack_host_id; 
+        $matchRequests->winning_host_id = $request->winning_host_id; 
+        $matchRequests->save(); 
     }
-
-
-
-
    /**
-     * Update the specified resource in storage.
+     * Update a match request
      *
      * @param  int  $id
+     * @bodyParam status \Illuminate\Http\Request required Match request status
+     * @bodyParam req_host_id \Illuminate\Http\Request required Match request Requested user id
+     * @bodyParam ack_host_id \Illuminate\Http\Request required Match request acknowledged user id
+     * @bodyParam winning_host_id \Illuminate\Http\Request required Match request status winning user id
      * @return Response
      */
-    public function update($id,Request $request)
-    {
-        //------------------------@start update a match request field ---------------------------------------------------
-        
-        $matchRequests = MatchRequests::find($id); // update by id
-
-        $status = $request->get('status'); // validate status input
-        $req_host_id= $request->get('req_host_id'); // validate requested host id input
-        $ack_host_id= $request->get('ack_host_id'); // validate acknowledged host id input
-        $winning_host_id= $request->get('winning_host_id'); // validate winning host id input
-
-
-        $matchRequests  ->status= $status ; // assign input request to status record in database
-        $matchRequests ->req_host_id = $req_host_id ; // assign input request to requested host id record in database
-        $matchRequests  ->ack_host_id = $ack_host_id; // assign input request to acknowledged host id record in database
-        $matchRequests  ->winning_host_id= $winning_host_id; // assign input request to winning host id record in database
-
-        $matchRequests ->save();  // updates all fields
-
- //------------------------@end update a match request field ---------------------------------------------------
+    public function update($id,Request $request){
+        $matchRequests = MatchRequests::find($id); 
+        $status = $request->get('status'); 
+        $req_host_id= $request->get('req_host_id'); 
+        $ack_host_id= $request->get('ack_host_id'); 
+        $winning_host_id= $request->get('winning_host_id'); 
+        $matchRequests  ->status= $status ;
+        $matchRequests ->req_host_id = $req_host_id ; 
+        $matchRequests  ->ack_host_id = $ack_host_id; 
+        $matchRequests  ->winning_host_id= $winning_host_id; 
+        $matchRequests ->save();  
     }
-
     /**
-     * Remove the specified resource from storage.
+     * Remove a match request
      *
      * @param  \App\MatchRequests  $matchRequests
+     * @param  $id int
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-//------------------------@start delete a match request field ---------------------------------------------------
-
-$matchRequests = MatchRequests::find($id); // find match request by id
-
-$matchRequests ->delete(); // delete a match request record
-
-//------------------------@end delete a match request field ---------------------------------------------------
+    public function destroy($id){
+        $matchRequests = MatchRequests::find($id); 
+        $matchRequests ->delete(); 
     }
 }

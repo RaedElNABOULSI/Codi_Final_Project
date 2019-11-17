@@ -36,6 +36,13 @@ class HostTeamController extends Controller
      * Create a new host
      *
      * @bodParam  \Illuminate\Http\Request  $request
+     * @bodParam playerCapacity  \Illuminate\Http\Request required Players needed  
+     * @bodParam ageMin \Illuminate\Http\Request required Minimum age needed
+     * @bodParam ageMax  \Illuminate\Http\Request required Maximum age needed 
+     * @bodParam teamName  \Illuminate\Http\Request required Team name 
+     * @bodParam location \Illuminate\Http\Request required Preferred location  
+     * @bodParam position  \Illuminate\Http\Request required Position needed 
+     * @bodParam userName  \Illuminate\Http\Request required Host Username
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request){
@@ -71,9 +78,6 @@ class HostTeamController extends Controller
           'message' => 'Hosting Successful!',
           ]);
     }
-
-
-
    /**
      * Update a host
      *
@@ -81,43 +85,26 @@ class HostTeamController extends Controller
      * @bodParam  \Illuminate\Http\Request  $request
      * @return Response
      */
-    public function update($id,Request $request)
-    {
-        //------------------------@start update a host team field ---------------------------------------------------
-        
-        $hostTeams  =HostTeams::find($id); // update by id
-
-         $no_of_players = $request->get('no_of_players '); // validate no of players input
-         $age_min= $request->get('age_min'); // validate min age input
-         $age_max= $request->get('age_max'); // validate max age input
-         $team_name= $request->get('team_name'); // validate team name input
- 
- 
-         $hostTeams ->no_of_players= $no_of_players ; // assign input request to no of players record in database
-         $hostTeams  ->age_min=$age_min ; // assign input request to min age record in database
-         $hostTeams  ->age_max =  $age_max; // assign input request to max age record in database
-         $hostTeams  ->team_name= $team_name; // assign input request to team name record in database
- 
-         $hostTeams ->save(); // updates all fields
- 
-  //------------------------@end update a host team field ---------------------------------------------------
+    public function update($id,Request $request){
+        $hostTeams  =HostTeams::find($id); 
+        $no_of_players = $request->get('no_of_players '); 
+        $age_min= $request->get('age_min');
+        $age_max= $request->get('age_max'); 
+        $team_name= $request->get('team_name'); 
+        $hostTeams ->no_of_players= $no_of_players ; 
+        $hostTeams  ->age_min=$age_min ; 
+        $hostTeams  ->age_max =  $age_max; 
+        $hostTeams  ->team_name= $team_name; 
+        $hostTeams ->save(); 
     }
-
-
     /**
      * Remove a host
      *
      * @bodParam  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-//------------------------@start delete a video field ---------------------------------------------------
-
-    $hostTeams = HostTeams::find($id); // find host by id
-
-   $hostTeams ->delete(); // delete a host record
-
-//------------------------@end delete a video field ---------------------------------------------------
+    public function destroy($id){
+        $hostTeams = HostTeams::find($id);
+        $hostTeams ->delete(); 
     }
 }

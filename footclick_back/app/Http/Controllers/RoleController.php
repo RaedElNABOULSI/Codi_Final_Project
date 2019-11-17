@@ -4,7 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Roles;
 use Illuminate\Http\Request;
-
+/**
+ * @group User Role management
+ *
+ * APIs for managing roles
+ */
 class RoleController extends Controller
 {
     /**
@@ -12,14 +16,12 @@ class RoleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
+    public function index(){
         $roles = Roles::all();
         return $roles;
     }
-
     /**
-     * Store a newly created resource in storage.
+     * Store a new role
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -30,7 +32,7 @@ class RoleController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display all roles
      *
      * @param  \App\Roles  $roles
      * @return \Illuminate\Http\Response

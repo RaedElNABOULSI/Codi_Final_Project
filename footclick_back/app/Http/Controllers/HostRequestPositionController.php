@@ -4,32 +4,24 @@ namespace App\Http\Controllers;
 
 use App\HostRequestPosition;
 use Illuminate\Http\Request;
-
+/**
+ * @group Host requested position relations management
+ *
+ * APIs for managing Host requested position relations
+ */
 class HostRequestPositionController extends Controller
 {
     /**
-     * Display all hosts
+     * Display all host requested positions
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
+    public function index(){
         $hostRequestPositions = HostRequestPosition::all();
         return   $hostRequestPositions ;
     }
-
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
+     * Store a new host requested position
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response

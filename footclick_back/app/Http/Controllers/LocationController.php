@@ -4,7 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Locations;
 use Illuminate\Http\Request;
-
+/**
+ * @group Location management
+ *
+ * APIs for managing locations
+ */
 class LocationController extends Controller
 {
     /**
@@ -12,17 +16,12 @@ class LocationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-
+    public function index(){
         $locations = Locations::all();
         return   $locations;
-    
-
     }
-
     /**
-     * Store a newly created resource in storage.
+     * Store a new location
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -33,7 +32,7 @@ class LocationController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display a location
      *
      * @param  \App\Locations  $locations
      * @return \Illuminate\Http\Response
@@ -42,9 +41,8 @@ class LocationController extends Controller
     {
         //
     }
-
     /**
-     * Update the specified resource in storage.
+     * Update a location
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Locations  $locations
@@ -56,7 +54,7 @@ class LocationController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove a location
      *
      * @param  \App\Locations  $locations
      * @return \Illuminate\Http\Response

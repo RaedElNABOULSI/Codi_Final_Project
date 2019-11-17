@@ -35,12 +35,19 @@ class UsersController extends Controller  {
                               ->get();
       return   $user ;
      }
-
-
     /**
      *  Create a new user
      *
-     * @bodyParam  \Illuminate\Http\Request  $request
+     * @bodyParam  $request  \Illuminate\Http\Request 
+     * @bodyParam  $email  \Illuminate\Http\Request required Email of the user
+     * @bodyParam  $password  \Illuminate\Http\Request required Password of the user
+     * @bodyParam  $footclickName  \Illuminate\Http\Request required FootclickName of the user
+     * @bodyParam  $age  \Illuminate\Http\Request required Age of the user
+     * @bodyParam  $foot  \Illuminate\Http\Request required Foot of the user
+     * @bodyParam  $height  \Illuminate\Http\Request required Height of the user
+     * @bodyParam  $locationId  \Illuminate\Http\Request required Location of the user
+     * @bodyParam  $positionId  \Illuminate\Http\Request required Position of the user
+     * @bodyParam  $traitIds  \Illuminate\Http\Request required Trait of the user
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)  { 
@@ -53,7 +60,7 @@ class UsersController extends Controller  {
           $height=$request->height_param;       
           $locationId=$request->locationIdSelected_param;                
           $positionId=$request->positionIdSelected_param;         
-          $traitIds=$request->traitIdSelected_param;     // array of trait ids
+          $traitIds=$request->traitIdSelected_param;     
           //---Insert  into 'users' table in database 
           $user = new User; 
           $user->email =  $email;                                      
@@ -71,7 +78,7 @@ class UsersController extends Controller  {
           $playerPosition->save();
           //---Insert  into 'Player_Trait' table in database 
           foreach($traitIds as $traitId){
-            $playerTrait = new PlayerTrait; // new row
+            $playerTrait = new PlayerTrait; 
             $playerTrait->trait_id = $traitId;
             $playerTrait->player_id=User::where('footclick_name', $footclickName)->value('id');
             $playerTrait->save();
@@ -81,65 +88,59 @@ class UsersController extends Controller  {
           $userRole->user_id=User::where('footclick_name', $footclickName)->value('id');
           $userRole->role_id=Roles::where('role', 'Player')->value('id');
           $userRole->save();
-             //     ---- return success/error message
+             //---- return success/error message
            return response()->json([
              'currentUser' => $footclickName,
              'message' => 'Registration Successful!',
              ]);
-            // redirect to Home page
-           
     }
-
-
    /**
-     * Update aChooseser
+     * Update a User
      *
      * @bodyParChoose  int  $id
      * @bodyParam \Illuminate\Http\Request  $request
      * @return Response
      */
     public function update($id,Request $request)   {
-
-          $user=User::find($id);                                                                     // update by id
-
-          $email = $request->get('email');                                                 // validate email input
-          $password= $request->get('password');                                 // validate password input
-          $footclick_name= $request->get('footclick_name');          // validate footclick name input
-          $foot= $request->get('foot');                                                     // validate foot input
-          $height= $request->get('height');                                            // validate height input
-          $location= $request->get('location');                                      // validate location input
-          $position = $request->get('position');                                     // validate position input
-          $trait= $request->get('trait');                                                     // validate trait input
-          $role= $request->get('role');                                                       // validate role input
-
-          $user->email= $email ;                                                                   // assign input request to email record in database
-          $user->password = $password;                                                   // assign input request to password record in database
-          $user->footclick_name= $footclick_name;                             // assign input request to footclick name record in database
-          $user->foot= $foot ;                                                                       // assign input request to foot record in database
-          $user->height = $height;                                                              // assign input request to height record in database
-          $user->location= $location;                                                         // assign input request to location record in database
-          $user->position= $position ;                                                       // assign input request to position record in database
-          $user->trait=$trait;                                                                       // assign input request to trait record in database
-          $user->role=$role;                                                                        // assign input request to role record in database
-          $user->save();                                                                                // updates all fields
+          $user=User::find($id);                                                                     
+          $email = $request->get('email');                                                 
+          $password= $request->get('password');                                
+          $footclick_name= $request->get('footclick_name');          
+          $foot= $request->get('foot');                              
+          $height= $request->get('height');                                            
+          $location= $request->get('location');                                      
+          $position = $request->get('position');                                     
+          $trait= $request->get('trait');                                                    
+          $role= $request->get('role');                                                      
+          $user->email= $email ;                                                                  
+          $user->password = $password;                                                   
+          $user->footclick_name= $footclick_name;                             
+          $user->foot= $foot ;                                                                      
+          $user->height = $height;                                                              
+          $user->location= $location;                                                         
+          $user->position= $position ;                                                       
+          $user->trait=$trait;                                                               
+          $user->role=$role;                                                                 
+          $user->save();                                                                     
     }  
-
     /**
      * Remove a user
      *
-     * @bodyParam int $id
+     * @bodyParam $id int required User id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)     {
-
           $user = User::find($id);             // find user by id
           $user->delete();                         // delete a user record
-
     }
-
     /**
      * Display FILTERED players/users according to Host conditions
      *
+     * @bodyParam \Illuminate\Http\Request $request
+     * @bodyParam $ageMin \Illuminate\Http\Request $request required Minimum Age
+     * @bodyParam $ageMax \Illuminate\Http\Request $request required Maximum Age
+     * @bodyParam $positionId \Illuminate\Http\Request $request required Preferred Position
+     * @bodyParam $locationId \Illuminate\Http\Request $request required Preferred Location
      * @return \Illuminate\Http\Response
      */
     public function filter(Request $request)  {

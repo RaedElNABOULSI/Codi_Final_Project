@@ -16,74 +16,44 @@ class PositionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-    //------------------------@start Get football position -------------------------------------------
-           $positions = Positions::all();
-           return   $positions ;
-     //------------------------@end Get football position --------------------------------------------
+    public function index(){
+       $positions = Positions::all();
+       return $positions;
     }
-
- 
-
     /**
      * Create a new position
      *
      * @bodyParam  \Illuminate\Http\Request  $request
+     * @bodyParam position \Illuminate\Http\Request required Position 
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
- //------------------------@start Insert a football position -------------------------------------------
-          
-
-        $positions = new Positions; // create a new instance of the model
-
-        $positions->position = $request->position; // validate position input
-   
-        $positions->save(); // insert records to the database
-
- //------------------------@end Insert a football position -------------------------------------------
+    public function store(Request $request){
+       $positions = new Positions; 
+       $positions->position = $request->position; 
+       $positions->save(); 
     }
-
-
-
    /**
      * Update a position
      *
-     * @bodyParam  int  $id
+     * @bodyParam  $id  int
      * @bodyParam  \Illuminate\Http\Request  $request
+     * @bodyParam position \Illuminate\Http\Request required Position 
      * @return Response
      */
-    public function update($id,Request $request)
-    {
-           //------------------------@start update a football position field ---------------------------------------------------
-        
-           $positions = Positions::find($id); // update by id
-
-           $position = $request->get('position'); // validate position input
-         
-           $positions  ->position= $position ; // assign input request to position record in database
-   
-           $positions ->save(); // updates all fields
-   
-    //------------------------@end update a football position field  ---------------------------------------------------
+    public function update($id,Request $request){
+       $positions = Positions::find($id); 
+       $position = $request->get('position'); 
+       $positions->position = $position ;
+       $positions->save(); 
     }
-
     /**
-     * Remove a positions
+     * Remove a position
      *
      * @bodyParam  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-//------------------------@start delete a position field ---------------------------------------------------
-
-  $positions = Positions::find($id); // find position by id
-
-  $positions->delete(); // delete a position record
-
-//------------------------@end delete a position field ---------------------------------------------------
+    public function destroy($id){
+       $positions = Positions::find($id);
+       $positions->delete();
     }
 }

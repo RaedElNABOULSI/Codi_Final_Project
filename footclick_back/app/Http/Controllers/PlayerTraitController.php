@@ -4,85 +4,59 @@ namespace App\Http\Controllers;
 
 use App\PlayerTrait;
 use Illuminate\Http\Request;
-
+/**
+ * @group Player Trait relation management
+ *
+ * APIs for managing player trait relations
+ */
 class PlayerTraitController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a playerTrait
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-//------------------------@start Get all player traits -------------------------------------------
-
+    public function index(){
         $playerTrait= PlayerTrait::all();
         return   $playerTrait;
-
- //------------------------@end Get all player traits --------------------------------------------
     }
-
-
-
     /**
-     * Store a newly created resource in storage.
+     * Store a new playerTrait
      *
      * @param  \Illuminate\Http\Request  $request
+     * @bodyParam player_id \Illuminate\Http\Request required Player id
+     * @bodyParam trait_id \Illuminate\Http\Request required Trait id
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-//------------------------@start Insert a player trait -------------------------------------------
-          
-
-     $playerTrait = new PlayerTrait; // create a new instance of the model
-
-     $playerTrait ->player_id = $request->player_id ; // validate player id input
-     $playerTrait ->trait_id = $request->trait_id ; // validate trait id input
-
-
-     $playerTrait ->save(); // insert records to the database
-
- //------------------------@end Insert a player trait-------------------------------------------
+    public function store(Request $request){
+        $playerTrait = new PlayerTrait; 
+        $playerTrait->player_id = $request->player_id ; 
+        $playerTrait->trait_id = $request->trait_id ; 
+        $playerTrait->save(); 
     }
-
      /**
-     * Update the specified resource in storage.
+     * Update a playerTrait
      *
      * @param  int  $id
      * @return Response
      */
-    public function update($id,Request $request)
-    {
-        //------------------------@start update a player trait field ---------------------------------------------------
-        
-       $playerTrait = PlayerTrait::find($id); // update by id
-
-       $player_id= $request->get('player_id'); // validate player id input
-       $trait_id= $request->get('trait_id'); // validate trait id input
-
-       $playerTrait ->player_id= $player_id ; // assign input request to player id record in database
-       $playerTrait ->trait_id= $player_id; // assign input request to trait id record in database
-
-       $playerTrait->save(); // updates all fields
-
-//------------------------@end update a player trait field ---------------------------------------------------
+    public function update($id,Request $request){
+        $playerTrait = PlayerTrait::find($id); 
+        $player_id= $request->get('player_id'); 
+        $trait_id= $request->get('trait_id'); 
+        $playerTrait ->player_id= $player_id ; 
+        $playerTrait ->trait_id= $player_id; 
+        $playerTrait->save(); 
     }
-
     /**
-     * Remove the specified resource from storage.
+     * Remove a playerTrait
      *
      * @param  \App\PlayerTrait  $playerTrait
+     * @param  $id int
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-//------------------------@start delete a player trait field ---------------------------------------------------
-
-  $playerTrait= PlayerTrait::find($id); // find player trait by id
-
-  $playerTrait ->delete(); // delete a player trait record
-
-//------------------------@end delete a player trait field ---------------------------------------------------
+    public function destroy($id){
+        $playerTrait= PlayerTrait::find($id); 
+        $playerTrait ->delete(); 
     }
 }
