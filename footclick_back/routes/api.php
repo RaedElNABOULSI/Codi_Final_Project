@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Eloquent\Collection;
 use App\Stadiums;
 use App\User;
-
+use App\UserHost;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -21,9 +21,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-// -------------------------------@start  api resources -------------------------------------------------------
+// ----  api resources -----------------------
 Route::resource('bestgoal','BestGoalController'); 
-Route::resource('hostreqposition','HostReqPositionController');
+Route::resource('hostreqposition','HostRequestPositionController');
 Route::resource('hostteam','HostTeamController');
 Route::resource('matchreq','MatchRequestController');
 Route::resource('playerposition','PlayerPositionController');
@@ -36,26 +36,17 @@ Route::resource('trait','TraitController');
 Route::resource('location','LocationController'); // locations
 Route::resource('user','UsersController'); // Users 
 Route::resource('role','RoleController'); // roles
-// -------------------------------@end api resources -------------------------------------------------------
 
-// -----------@start FILTER players according to HOST cdts--------------------------------
-                              
+// -------FILTER players according to HOST cdts-----                
 Route::get('filterPlayers', 'UsersController@filter') ;
-                               
-// -----------@end FILTER players according to HOST cdts----------------------------------
 
-// -----------@start filter/sort stadium--------------------------------
-                              
-Route::get('filter_sort', 'StadiumController@filter') ;
-                               
-// -----------@end filter/sort stadium----------------------------------
+// ------- filter/sort stadium--------------------------------                  
+Route::get('filter_sort', 'StadiumController@filter') ;     
 
-// --------------------@start Send Mail --------------------------------------------
+// -------------- Send Mail --------------------------------------------
 Route::get('/send/email', 'HomeController@mail');          
-// --------------------@end Send Mail -----------------------------------------------
 
-
-// -------------------------------@start Login -----------------------------------------------------------------
+// -----Login -------------------------------
 Route::post('login',function (Request $request) {
     if(count(User::where('email', $request->email_param)->get()) > 0){
        $user = User::where('email', $request->email_param)->first();
@@ -79,9 +70,24 @@ Route::post('login',function (Request $request) {
        'message' => 'Unauthorized, check your credentials.',
     ), 401);
 });
-// -------------------------------@end Login ------------------------------------------------------------------
 
-
-// -------------------------------@start UPLOAD GOAL FOOTAGE -----------------------------------------------------------------
+// ----- UPLOAD GOAL FOOTAGE -----------------------------------------------------------------
 Route::post('fileupload', 'UploadFileController@store');
-// -------------------------------@end UPLOAD GOAL FOOTAGE ------------------------------------------------------------------
+
+// --------------Check if user is host--------------------------------------------
+Route::get('/checkhost', function (Request $request){
+   $userId=$request->get('userId');
+   $searchId= UserHost::findorfail($userId);
+   if($searchId){
+      return response(array(
+      'searchResult' => $searchId,
+      'message' => 'User is a host',
+   ));
+   }else{
+      return response(array(
+         'searchResult' => 'error',
+         'message' => 'User is not a host',
+      ));
+   }
+   // return $searchId;
+});     

@@ -145,24 +145,21 @@ class UsersController extends Controller  {
     public function filter(Request $request)  {
       $ageMin=$request->get('ageMin_param');
       $ageMax=$request->get('ageMax_param');
-      $position=$request->get('position_param');
-      $location=$request->get('location_param');
-
+      $positionId=$request->get('positionId_param');
+      $locationId=$request->get('locationId_param');
       // return all positions
-      if ($position=='Any'){
+      if ($positionId=='5'){
             $userInfoFiltered= User::join('Location', 'users.location_id', '=', 'Location.id')
             ->join('Player_Position', 'users.id', '=', 'Player_Position.player_id')
             ->join('Position', 'Player_Position.position_id', '=', 'Position.id')
             ->join('Player_Trait', 'users.id', '=', 'Player_Trait.player_id')
             ->join('Trait', 'Player_Trait.trait_id', '=', 'Trait.id')
-            ->select('users.footclick_name','users.age','users.foot','users.height', 'Location.location','Position.position','Trait.trait')
+            ->select('users.footclick_name','users.age','users.foot','users.height', 'Location.location', 'Position.position','Trait.trait')
             ->whereBetween('age', [$ageMin, $ageMax])
-            ->where('location',$location)
+            ->where('Location.id',$locationId)
             ->get();
             return   $userInfoFiltered; 
-      }
-       // return specific positions
-      else{
+      }else{   // return specific positions
             $userInfoFiltered= User::join('Location', 'users.location_id', '=', 'Location.id')
             ->join('Player_Position', 'users.id', '=', 'Player_Position.player_id')
             ->join('Position', 'Player_Position.position_id', '=', 'Position.id')
@@ -170,8 +167,8 @@ class UsersController extends Controller  {
             ->join('Trait', 'Player_Trait.trait_id', '=', 'Trait.id')
             ->select('users.footclick_name','users.age','users.foot','users.height', 'Location.location','Position.position','Trait.trait')
             ->whereBetween('age', [$ageMin, $ageMax])
-            ->where('position',$position)
-            ->where('location',$location)
+            ->where('Position.id',$positionId)
+            ->where('Location.id',$locationId)
             ->get();
             return   $userInfoFiltered; 
       }

@@ -34,10 +34,9 @@ class LogInPage extends Component {
         console.log("USER credentials in post api", res.data);
         // authenticated
         this.props.callbackParent(res.data);
-
         // save  in local storage
         localStorage.setItem("api_token", res.data.currentUser.api_token);
-
+        localStorage.setItem("userId", res.data.currentUser.id);
         // redirect to Landing
         this.setState({ redirectLanding: !this.state.redirectLanding });
       })

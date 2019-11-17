@@ -7,7 +7,12 @@ import {
   MDBContainer,
   MDBRow,
   MDBCol,
-  MDBInput
+  MDBInput,
+  MDBCard,
+  MDBCardBody,
+  MDBCardImage,
+  MDBCardTitle,
+  MDBCardText
 } from "mdbreact";
 
 //------------------------@start import scss link -------------------------------
@@ -25,6 +30,7 @@ class PlayersPage extends Component {
     super(props);
     this.state = {
       userInfo: [],
+      hostCdts: [],
       positions: [],
       locations: [],
       playerCapacitySelected: [],
@@ -33,58 +39,69 @@ class PlayersPage extends Component {
       positionSelected: [],
       locationSelected: [],
       teamNameInput: [],
-      toggleInvite: false
+      toggleInvite: false,
+      toggleMatchChallenge: false
     };
   }
 
-  //---------- @start Fetching USER INFO ------------
   componentDidMount() {
+    //--- fetch user info----
     axios.get("http://127.0.0.1:8000/api/user").then(res => {
-      console.log("this is the response of the USER INFO api");
-      console.log(res.data);
       this.setState({ userInfo: res.data });
     });
-    //------- @end Fetching USER INFO -----------------
-    //------- @start Fetching POSITIONS ---------------
+    //----fetch positions --------
     axios.get("http://127.0.0.1:8000/api/position").then(res => {
-      console.log("this is the response of the POSITION api");
-      console.log(res.data);
       this.setState({ positions: res.data });
     });
-    //---- @end Fetching POSITIONS ----------------------------
-    //---- @start Fetching LOCATIONS ----------------------------
+    //----fetch locations--------
     axios.get("http://127.0.0.1:8000/api/location").then(res => {
-      console.log("this is the response of the LOCATION api");
-      console.log(res.data);
       this.setState({ locations: res.data });
     });
-    //----- @end Fetching LOCATIONS ----------------------------
+    axios.get("http://127.0.0.1:8000/api/position").then(res => {
+      this.setState({ positions: res.data });
+    });
+    //----fetch HostTeam conditions--------
+    axios.get("http://127.0.0.1:8000/api/hostteam").then(res => {
+      console.log("HostTeam cdts api", res.data);
+      this.setState({ hostCdts: res.data });
+    });
+    //----check if user is host--------
+    axios
+      .get("http://127.0.0.1:8000/api/checkhost", {
+        params: {
+          userId: localStorage.getItem("userId")
+        }
+      })
+      .then(res => {
+        console.log("CHECK HOST response is", res.data);
+        this.setState({ toggleInvite: !this.state.toggleInvite });
+      })
+      .catch(function(error) {
+        console.log("User is not a host", error);
+      });
   }
 
   handleChange = e => {
     this.setState({ [e.target.name]: e.target.value }, () => {
-      console.log("State in handle Change ");
-      console.log(this.state);
+      console.log("handleChange state", this.state);
     });
   };
 
   handleSubmit = e => {
     e.preventDefault();
-    //------- @start Fetching Filtered players and rendering 'INVITE' button--------
+    //-------fetch filtered players -----
     axios
       .get("http://127.0.0.1:8000/api/filterPlayers", {
         params: {
           ageMin_param: this.state.minAgeInput,
           ageMax_param: this.state.maxAgeInput,
-          position_param: this.state.positionSelected,
-          location_param: this.state.locationSelected
+          positionId_param: this.state.positionSelected,
+          locationId_param: this.state.locationSelected
         }
       })
       .then(res => {
-        console.log(
-          "This is the response (res.data) in fetching FILTERED players"
-        );
-        console.log(res.data);
+        console.log("FILTERED RESPONSE IS", res.data);
+        // render invite button
         this.setState({
           userInfo: res.data,
           toggleInvite: !this.state.toggleInvite
@@ -96,17 +113,37 @@ class PlayersPage extends Component {
       .finally(function() {
         // always executed
       });
-    //-------- @end Fetching Filtered players and rendering 'INVITE' button--------------
+    //-- post Host team api ---
+    axios
+      .post("http://127.0.0.1:8000/api/hostteam", {
+        playerCapacity: this.state.playerCapacitySelected,
+        ageMin: this.state.minAgeInput,
+        ageMax: this.state.maxAgeInput,
+        positionId: this.state.positionSelected,
+        locationId: this.state.locationSelected,
+        teamName: this.state.teamNameInput,
+        userName: localStorage.getItem("footclickName")
+      })
+      .then(res => {
+        console.log("response in POST hostTeam", res.data);
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
   };
-
+  // shouldComponentUpdate(newState, preState) {
+  //   if (newState.toggleInvite == true) {
+  //     return false;
+  //   } else {
+  //     return true;
+  //   }
+  // }
   render() {
     return (
       <div className="PlayersPage">
         <NavbarPlayer />
-
-        {/* ------------------------ @start PlayersPage content---------------- */}
         <div className="PlayersPage_Content">
-          {/* //------------------------ @start TAB----------------------------------------------- */}
+          {/* //------------------------TAB----------------------------------------------- */}
           <div class="tab">
             <Tabs>
               <TabList className="TabList">
@@ -115,16 +152,14 @@ class PlayersPage extends Component {
                 <Tab>Host a Team</Tab>
                 <Tab>Match Challenge</Tab>
               </TabList>
-              {/* ----@start PLAYERS panel ----------------------------------------- */}
+              {/* ---'Players' panel ------------------------ */}
               <TabPanel>
                 {this.state.userInfo.map(item => (
                   <div className="TabPanelPlayers">
-                    {/* <div className="playerImage"> */}
                     <img
                       src="https://images.all-free-download.com/images/graphiclarge/football_player_289.jpg"
                       alt="error"
                     />
-                    {/* </div> */}
                     <ul>
                       <li>
                         <strong>Footclick Name:</strong> {item.footclick_name}
@@ -156,12 +191,49 @@ class PlayersPage extends Component {
                   </div>
                 ))}
               </TabPanel>
-              {/* ----@end PLAYERS panel ----------------------------------------- */}
+              {/* 'Join a team' Panel */}
               <TabPanel>
-                <h2>Any content 2</h2>
+                <div>
+                  <MDBCol className="TabPanelJoin">
+                    {this.state.hostCdts.map(item => (
+                      <MDBCard style={{ width: "22rem" }}>
+                        <MDBCardImage
+                          className="img-fluid"
+                          src="https://mccoyderek.files.wordpress.com/2016/07/team.jpg"
+                          waves
+                        />
+                        <MDBCardBody>
+                          <MDBCardTitle className="cardTitle">
+                            {item.team_name}
+                          </MDBCardTitle>
+                          <MDBCardText>
+                            <ul>
+                              <li>
+                                <strong>Host: </strong>
+                                {item.footclick_name}
+                              </li>
+                              <li>
+                                <strong>No. of Players Needed: </strong>{" "}
+                                {item.no_of_players}
+                              </li>
+                              <li>
+                                <strong>Preferred Location: </strong>{" "}
+                                {item.location}
+                              </li>
+                              <li>
+                                <strong>Preferred Position: </strong>{" "}
+                                {item.position}
+                              </li>
+                            </ul>
+                          </MDBCardText>
+                          <MDBBtn href="#">Join Team</MDBBtn>
+                        </MDBCardBody>
+                      </MDBCard>
+                    ))}
+                  </MDBCol>
+                </div>
               </TabPanel>
-
-              {/* ----@start HOST panel ----------------------------------------- */}
+              {/* ---- HOST panel --------------- */}
               <TabPanel>
                 <MDBContainer className="mt-5 text-center">
                   <MDBRow>
@@ -197,7 +269,7 @@ class PlayersPage extends Component {
                             min={parseInt(this.state.minAgeInput)}
                             required
                           />
-                          {/* ----@start select preferred PLAYER POSITION ----------------------------------------- */}
+                          {/* ---- select preferred 'Player Position' ------*/}
                           <select
                             className="browser-default custom-select"
                             name="positionSelected"
@@ -205,15 +277,11 @@ class PlayersPage extends Component {
                             required
                           >
                             <option value="">Preferred Position</option>
-                            <option value="Any">Any</option>
                             {this.state.positions.map(item => (
-                              <option value={item.position}>
-                                {item.position}
-                              </option>
+                              <option value={item.id}>{item.position}</option>
                             ))}
                           </select>
-                          {/* ----@end select preferred PLAYER POSITION ----------------------------------------- */}
-                          {/* ----@start select preferred PLAYER LOCATION ----------------------------------------- */}
+                          {/* ---select preferred 'Player Location' ---- */}
                           <select
                             className="browser-default custom-select"
                             name="locationSelected"
@@ -223,47 +291,70 @@ class PlayersPage extends Component {
                           >
                             <option value="">Preferred Location</option>
                             {this.state.locations.map(item => (
-                              <option value={item.location}>
-                                {item.location}
-                              </option>
+                              <option value={item.id}>{item.location}</option>
                             ))}
                           </select>
-                          {/* ----@end select preferred PLAYER LOCATION ----------------------------------------- */}
+                          {/* ----'Team Name' input ------ */}
                           <MDBInput
                             label="Team Name"
                             name="teamNameInput"
                             onChange={this.handleChange}
                             required
                           />
+                          {/* ----'Submit' button ------ */}
                           <p className="lead">
                             <MDBBtn color="primary" type="Submit">
                               Submit
                             </MDBBtn>
                           </p>
                         </form>
-
                         {/* <hr className="my-2" /> */}
                       </MDBJumbotron>
                     </MDBCol>
                   </MDBRow>
                 </MDBContainer>
               </TabPanel>
-              {/* ----@end HOST panel ----------------------------------------- */}
-
+              {/* ---- 'Match Challenge' Panel --- */}
               <TabPanel>
-                <h2>challenge</h2>
+                <div>
+                  <MDBCol className="TabPanelChallenge">
+                    {/* {this.state.hostCdts.map(item => ( */}
+                    <MDBCard style={{ width: "22rem" }}>
+                      <MDBCardImage
+                        className="img-fluid"
+                        src="https://i.ytimg.com/vi/5XNu-ohDiJs/maxresdefault.jpg"
+                        waves
+                      />
+                      <MDBCardBody>
+                        <MDBCardTitle className="cardTitle">
+                          Team Name
+                        </MDBCardTitle>
+                        <MDBCardText>
+                          <ul>
+                            <li>
+                              <strong>Host: </strong>
+                              host name
+                            </li>
+
+                            <li>
+                              <strong>Location: </strong> location y
+                            </li>
+                          </ul>
+                        </MDBCardText>
+                        <MDBBtn href="#">Challenge Team</MDBBtn>
+                      </MDBCardBody>
+                    </MDBCard>
+                    {/* ))} */}
+                  </MDBCol>
+                </div>
               </TabPanel>
             </Tabs>
           </div>
-          {/* //------------------------ @end TAB----------------------------------------------- */}
         </div>
-        {/* //------------------------ @end PlayersPage content---------------- */}
-
-        {/* //------------------------ @start Footer---------------- */}
+        {/* //---- Footer---------------- */}
         <div>
           <Footer />
         </div>
-        {/* //------------------------ @end Footer---------------- */}
       </div>
     );
   }

@@ -4,14 +4,14 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class HostTeams extends Model
+class HostRequestPosition extends Model
 {
-          /**
+      /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'Host_Team';
+    protected $table = 'HostReqPosition';
 
         /**
      * The attributes that are mass assignable.
@@ -19,7 +19,7 @@ class HostTeams extends Model
      * @var array
      */
     protected $fillable = [
-        'no_of_players','age_min','age_max','team_name','location_id'
+        'host_id','position_id'
     ];
     public $timestamps = false;
 }

@@ -59,7 +59,10 @@ class App extends Component {
               <LandingPage_Player {...props} user={this.state.AppUser} />
             )}
           />
-          <Route path="/playersPage" render={() => <PlayersPage />} />
+          <Route
+            path="/landing_player/playersPage"
+            render={() => <PlayersPage />}
+          />
           <Route
             path="/landing_player/contact"
             render={() => <ContactPage_Player />}

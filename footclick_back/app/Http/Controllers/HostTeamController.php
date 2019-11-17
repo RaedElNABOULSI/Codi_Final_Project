@@ -3,6 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\HostTeams;
+use App\Positions;
+use App\Locations;
+use App\HostRequestPosition;
+use App\UserHost;
+use App\User;
 use Illuminate\Http\Request;
 /**
  * @group Host Team management
@@ -12,19 +17,20 @@ use Illuminate\Http\Request;
 class HostTeamController extends Controller
 {
     /**
-     * Display hosts
+     * Display all hosts
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-    //------------------------@start Get the host of the team -------------------------------------------
-           $hostTeams = HostTeams::all();
+    public function index(){
+           $hostTeams = HostTeams::join('Location', 'Host_Team.location_id', '=', 'Location.id')
+                                                            ->join('HostReqPosition','Host_Team.id','=','HostReqPosition.host_id')
+                                                            ->join('Position', 'HostReqPosition.position_id', '=', 'Position.id')
+                                                            ->join('UserHost', 'Host_Team.id', '=', 'UserHost.host_id')
+                                                            ->join('users', 'UserHost.user_id', '=', 'users.id')
+                                                            ->select('Host_Team.no_of_players','Host_Team.team_name','Host_Team.age_min','Host_Team.age_max','users.footclick_name','Location.location','Position.position')
+                                                            ->get();
            return   $hostTeams ;
-     //------------------------@end Get the host of the team --------------------------------------------
     }
-
-  
 
     /**
      * Create a new host
@@ -32,21 +38,38 @@ class HostTeamController extends Controller
      * @bodParam  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //------------------------@start Insert a host of a team-------------------------------------------
-          
-
-        $hostTeams = new HostTeams; // create a new instance of the model
-
-        $hostTeams->no_of_players = $request->no_of_players; // validate no. of players input
-        $hostTeams ->age_min = $request->age_min; // validate min age input
-        $hostTeams ->age_max = $request->age_max ; // validate max age input
-        $hostTeams ->team_name= $request->team_name; // validate team name input
-
-        $hostTeams ->save(); // insert records to the database
-
-      //------------------------@end Insert a host of a team -------------------------------------------
+    public function store(Request $request){
+        // retrieve input values
+        $playerCapacity=$request->playerCapacity;
+        $ageMin=$request->ageMin;
+        $ageMax=$request->ageMax;
+        $teamName=$request->teamName;
+        $locationId=$request->locationId;
+        $positionId=$request->positionId;
+        $userName=$request->userName;
+        // insert into 'Host_Team' table
+        $hostTeams = new HostTeams; 
+        $hostTeams->no_of_players=$playerCapacity;
+        $hostTeams->age_min=$ageMin;
+        $hostTeams->age_max=$ageMax;
+        $hostTeams->team_name=$teamName;
+        $hostTeams->location_id=$locationId;
+        $hostTeams ->save(); 
+        // insert into 'Host_Req_Position' table
+        $hostReqPositions=new HostRequestPosition;
+        $hostReqPositions->host_id=HostTeams::where('team_name', $teamName)->value('id');
+        $hostReqPositions->position_id=$positionId;
+        $hostReqPositions->save();
+        // insert into 'UserHost' table
+        $userHost=new UserHost;
+        $userHost->user_id=User::where('footclick_name', $userName)->value('id');
+        $userHost->host_id=HostTeams::where('team_name', $teamName)->value('id');
+        $userHost->save();
+        // return message
+        return response()->json([
+          'TeamName' => $teamName,
+          'message' => 'Hosting Successful!',
+          ]);
     }
 
 

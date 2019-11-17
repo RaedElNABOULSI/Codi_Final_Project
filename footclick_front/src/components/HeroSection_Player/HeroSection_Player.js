@@ -20,7 +20,7 @@ class HeroSection_Player extends Component {
           <p>play from a click</p>
           {/* ------------------------@start BUTTONS ------------------------------------------------- */}
           <div className="Buttons">
-            <Link to="/playersPage">
+            <Link to="/landing_player/playersPage">
               <Button className="Button" color="success">
                 Go to Lobby
               </Button>{" "}
