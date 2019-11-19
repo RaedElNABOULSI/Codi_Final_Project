@@ -30,6 +30,9 @@ class PlayersPage extends Component {
     super(props);
     this.state = {
       userInfo: [],
+      filteredUserInfo: [],
+      teamRequestFootclickName: [],
+      matchChallengeInfo: [],
       hostCdts: [],
       positions: [],
       locations: [],
@@ -40,11 +43,38 @@ class PlayersPage extends Component {
       locationSelected: [],
       teamNameInput: [],
       toggleInvite: false,
-      toggleMatchChallenge: false
+      toggleMatchChallenge: false,
+      toggleTeamRequest: false
     };
   }
 
   componentDidMount() {
+    //--- fetch teams that are ready for challenge----
+    axios
+      .get("http://127.0.0.1:8000/api/fullteams")
+      .then(res => {
+        this.setState({ matchChallengeInfo: [res.data] }, () => {
+          console.log("full team", this.state);
+        });
+      })
+      .catch(function(error) {
+        console.log("Cannot fetch full teams", error);
+      });
+    //--- fetch teamRequest info (Player footclick name)----
+    axios
+      .get("http://127.0.0.1:8000/api/teamreq", {
+        params: {
+          hostUserId: parseInt(localStorage.getItem("userId"))
+        }
+      })
+      .then(res => {
+        this.setState({ teamRequestFootclickName: [res.data] }, () => {
+          console.log("Player who requested to join a team is", this.state);
+        });
+      })
+      .catch(function(error) {
+        console.log("Cannot fetch player name who wants to join", error);
+      });
     //--- fetch user info----
     axios.get("http://127.0.0.1:8000/api/user").then(res => {
       this.setState({ userInfo: res.data });
@@ -65,7 +95,8 @@ class PlayersPage extends Component {
       console.log("HostTeam cdts api", res.data);
       this.setState({ hostCdts: res.data });
     });
-    //----check if user is host--------
+
+    //----check if user is host, toggleInvite & return filtered players--------
     axios
       .get("http://127.0.0.1:8000/api/checkhost", {
         params: {
@@ -74,13 +105,54 @@ class PlayersPage extends Component {
       })
       .then(res => {
         console.log("CHECK HOST response is", res.data);
-        this.setState({ toggleInvite: !this.state.toggleInvite });
+        this.setState({
+          toggleInvite: true,
+          filteredUserInfo: res.data
+        });
       })
       .catch(function(error) {
         console.log("User is not a host", error);
       });
   }
+  // handle onClick 'Accept' team request
+  handleAccept = item => {
+    // -- put accept team request api
+    axios
+      .post("http://127.0.0.1:8000/api/teamreqaccept", {
+        playerFname: item.currentUser,
+        statusAccepted: 2 // team request 'accepted'
+      })
+      .then(res => {
+        console.log("You joined the team successfully", res.data);
+        if (res.data.playerCapacity - 1 == 0) {
+          console.log("team full!");
+        }
+      })
+      .catch(function(error) {
+        console.log("handle accept error", error);
+      });
 
+    // //test
+    // console.log("Player name", item.currentUser);
+    // //test
+  };
+  // handle join Team requests
+  handleOnClick = item => {
+    // -- post Team Request api ---
+    axios
+      .post("http://127.0.0.1:8000/api/teamreq", {
+        status: 1, // 'pending'
+        type: "teamRequest",
+        playerId: parseInt(localStorage.getItem("userId")),
+        hostFootclickName: item.footclick_name
+      })
+      .then(res => {
+        console.log("response in POST hostTeam", res.data);
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+  };
   handleChange = e => {
     this.setState({ [e.target.name]: e.target.value }, () => {
       console.log("handleChange state", this.state);
@@ -103,8 +175,8 @@ class PlayersPage extends Component {
         console.log("FILTERED RESPONSE IS", res.data);
         // render invite button
         this.setState({
-          userInfo: res.data,
-          toggleInvite: !this.state.toggleInvite
+          filteredUserInfo: res.data,
+          toggleInvite: true
         });
       })
       .catch(function(error) {
@@ -131,13 +203,7 @@ class PlayersPage extends Component {
         console.log(error);
       });
   };
-  // shouldComponentUpdate(newState, preState) {
-  //   if (newState.toggleInvite == true) {
-  //     return false;
-  //   } else {
-  //     return true;
-  //   }
-  // }
+
   render() {
     return (
       <div className="PlayersPage">
@@ -150,6 +216,8 @@ class PlayersPage extends Component {
                 <Tab>Players</Tab>
                 <Tab>Join a Team</Tab>
                 <Tab>Host a Team</Tab>
+                <Tab>Filtered Players</Tab>
+                <Tab>Invitations/Team Requests</Tab>
                 <Tab>Match Challenge</Tab>
               </TabList>
               {/* ---'Players' panel ------------------------ */}
@@ -226,7 +294,9 @@ class PlayersPage extends Component {
                               </li>
                             </ul>
                           </MDBCardText>
-                          <MDBBtn href="#">Join Team</MDBBtn>
+                          <MDBBtn onClick={() => this.handleOnClick(item)}>
+                            Join Team
+                          </MDBBtn>
                         </MDBCardBody>
                       </MDBCard>
                     ))}
@@ -314,37 +384,109 @@ class PlayersPage extends Component {
                   </MDBRow>
                 </MDBContainer>
               </TabPanel>
+              {/* ---'Filtered Players' panel ------------------------ */}
+              <TabPanel>
+                {this.state.filteredUserInfo.map(item => (
+                  <div className="TabPanelPlayers">
+                    <img
+                      src="https://images.all-free-download.com/images/graphiclarge/football_player_289.jpg"
+                      alt="error"
+                    />
+                    <ul>
+                      <li>
+                        <strong>Footclick Name:</strong> {item.footclick_name}
+                      </li>
+                      <li>
+                        <strong>Position:</strong> {item.position}
+                      </li>
+                      <li>
+                        <strong>Foot:</strong> {item.foot}
+                      </li>
+                      <li>
+                        <strong>Age:</strong> {item.age}
+                      </li>
+                      <li>
+                        <strong>Height:</strong> {item.height}
+                      </li>
+                      <li>
+                        <strong>Location:</strong> {item.location}
+                      </li>
+                      <li>
+                        <strong>Specialties / Traits:</strong> {item.trait}
+                      </li>
+                    </ul>
+                    {this.state.toggleInvite && (
+                      <p className="lead">
+                        <MDBBtn color="primary">Invite</MDBBtn>
+                      </p>
+                    )}
+                  </div>
+                ))}
+              </TabPanel>
+              {/* ---- 'Invitations/Team Requests' Panel --- */}
+
+              <TabPanel>
+                <div>
+                  <MDBCol className="TabPanelRequest">
+                    {this.state.teamRequestFootclickName.map(item => (
+                      <MDBCard
+                        style={{ width: "22rem" }}
+                        className="invitationCard"
+                      >
+                        <MDBCardBody>
+                          <MDBCardTitle className="cardTitle">
+                            Team requests
+                          </MDBCardTitle>
+                          <MDBCardText>
+                            <p>
+                              <strong>{item.currentUser} </strong>
+                              requested to join your team{" "}
+                            </p>
+                          </MDBCardText>
+                          <MDBBtn
+                            key={item}
+                            onClick={() => this.handleAccept(item)}
+                          >
+                            Accept
+                          </MDBBtn>
+                          <MDBBtn href="#">Ignore</MDBBtn>
+                        </MDBCardBody>
+                      </MDBCard>
+                    ))}
+                  </MDBCol>
+                </div>
+              </TabPanel>
               {/* ---- 'Match Challenge' Panel --- */}
               <TabPanel>
                 <div>
                   <MDBCol className="TabPanelChallenge">
-                    {/* {this.state.hostCdts.map(item => ( */}
-                    <MDBCard style={{ width: "22rem" }}>
-                      <MDBCardImage
-                        className="img-fluid"
-                        src="https://i.ytimg.com/vi/5XNu-ohDiJs/maxresdefault.jpg"
-                        waves
-                      />
-                      <MDBCardBody>
-                        <MDBCardTitle className="cardTitle">
-                          Team Name
-                        </MDBCardTitle>
-                        <MDBCardText>
-                          <ul>
-                            <li>
-                              <strong>Host: </strong>
-                              host name
-                            </li>
+                    {this.state.matchChallengeInfo.map(item => (
+                      <MDBCard style={{ width: "22rem" }}>
+                        <MDBCardImage
+                          className="img-fluid"
+                          src="https://i.ytimg.com/vi/5XNu-ohDiJs/maxresdefault.jpg"
+                          waves
+                        />
+                        <MDBCardBody>
+                          <MDBCardTitle className="cardTitle">
+                            {item.teamName}
+                          </MDBCardTitle>
+                          <MDBCardText>
+                            <ul>
+                              <li>
+                                <strong>Host: </strong>
+                                {item.hostName}
+                              </li>
 
-                            <li>
-                              <strong>Location: </strong> location y
-                            </li>
-                          </ul>
-                        </MDBCardText>
-                        <MDBBtn href="#">Challenge Team</MDBBtn>
-                      </MDBCardBody>
-                    </MDBCard>
-                    {/* ))} */}
+                              <li>
+                                <strong>Location: </strong> {item.location}
+                              </li>
+                            </ul>
+                          </MDBCardText>
+                          <MDBBtn href="#">Challenge Team</MDBBtn>
+                        </MDBCardBody>
+                      </MDBCard>
+                    ))}
                   </MDBCol>
                 </div>
               </TabPanel>
