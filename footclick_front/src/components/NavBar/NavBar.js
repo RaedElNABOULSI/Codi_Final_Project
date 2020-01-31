@@ -1,12 +1,9 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-//----------------------- @start scss link ----------------------------------------------------------------------------
+import LogoHeader from "../../assets/images/logo-header.Pgtb0NZoBRejhUKdcY6jyx4UIID3UQ6oXbQZs4AVn8=";
+// import scss link
 import "../NavBar/NavBar.scss";
-//----------------------- @end scss link ---------------------------------------------------------------------------------
 
-//----------------------- @start font awesome link ----------------------------------------------------------------------------
-
-//----------------------- @end font awesome link ---------------------------------------------------------------------------------
 class NavBar extends Component {
   constructor(props) {
     super(props);
@@ -15,14 +12,9 @@ class NavBar extends Component {
   render() {
     return (
       <div className="Header">
-        {/* ------------------------------------@start Header Logo ------------------------------------------------ */}
-
         <Link to="/" className="Logo">
-          <img src="https://www.freelogoservices.com/api/main/images/1j+ojVVCOMkX9Wyrexe4hGff8Ynk32s262XbizxmfGwQoQJqlSEuh...Jv...Pgtb0NZoBRejhUKdcY6jyx4UIID3UQ6oXbQZs4AVn8=" />
-          {/* <h2 className="Logo">FootClick</h2> */}
+          <img src={LogoHeader} />
         </Link>
-        {/* ------------------------------------@end Header Logo ------------------------------------------------ */}
-
         <input type="checkbox" id="chk" />
         <label for="chk" className="show-menu-btn">
           <i className="fas fa-ellipsis-h"></i>

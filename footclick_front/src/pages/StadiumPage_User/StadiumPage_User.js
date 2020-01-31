@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import axios from "axios";
 
-//------------------------ @start import images ------------------------------------------------------------------------
+// import images
 import Filter from "../../assets/images/filter.svg";
-
-//------------------------ @end import images------------------------------------------------------------------------
+import FairplayStadium from "../../assets/images/stadium-fairplay.jpg";
 
 //------------------------ @start import components ----------------------------------------------------------------
 import NavBar from "../../components/NavBar/NavBar";
@@ -109,7 +108,10 @@ class StadiumPage_User extends Component {
         {this.state.data.map(item => (
           <div className="Content_GridParent">
             <div className="Content_GridChildLeft">
-              <img src={item.image} alt="error" />
+              <img
+                src={require(`../../assets/images/${item.image}`)}
+                alt="error"
+              />
             </div>
             <div className="Content_GridChildRight">
               <strong>Name:</strong> {item.name}
