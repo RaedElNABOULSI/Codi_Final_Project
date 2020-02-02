@@ -11,10 +11,14 @@ class Testimonial extends Component {
   }
   //------------------------ @start Fetching ----------------------------------------------------------------------------
   componentDidMount() {
-    axios.get("http://127.0.0.1:8000/api/testimonial").then(res => {
-      // console.log(res.data);
-      this.setState({ data: res.data });
-    });
+    axios
+      .get("http://127.0.0.1:8000/api/testimonial")
+      .then(res => {
+        this.setState({ data: res.data });
+      })
+      .catch(error => {
+        console.error(error);
+      });
   }
   //------------------------ @end Fetching ----------------------------------------------------------------------------
   render() {
@@ -28,7 +32,10 @@ class Testimonial extends Component {
           {/* ------------------------ @start mapping of Testimonials ---------------------------------------------- */}
           {this.state.data.map(item => (
             <div className="Child_Grid">
-              <img src={item.image} alt="error" />
+              <img
+                src={require(`../../assets/images/${item.image}`)}
+                alt="error"
+              />
               <h3>{item.name}</h3>
               <p>{item.content}</p>
             </div>
