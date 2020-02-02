@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import LogoHeader from "../../assets/images/logo-header.Pgtb0NZoBRejhUKdcY6jyx4UIID3UQ6oXbQZs4AVn8=";
 import { Link } from "react-router-dom";
 import {
   MDBDropdown,
@@ -26,7 +27,7 @@ class NavbarPlayer extends Component {
         {/* ------------------------------------@start Header Logo ------------------------------------------------ */}
 
         <Link to="/landing_player" className="Logo">
-          <img src="https://www.freelogoservices.com/api/main/images/1j+ojVVCOMkX9Wyrexe4hGff8Ynk32s262XbizxmfGwQoQJqlSEuh...Jv...Pgtb0NZoBRejhUKdcY6jyx4UIID3UQ6oXbQZs4AVn8=" />
+          <img src={LogoHeader} />
         </Link>
         {/* ------------------------------------@end Header Logo ------------------------------------------------ */}
 

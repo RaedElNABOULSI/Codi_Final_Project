@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+import map from "../../assets/images/map-contact-page.png";
 //------------------------ @start import components ----------------------------------------------------------------
 import NavbarPlayer from "../../components/NavbarPlayer/NavbarPlayer";
 import Footer from "../../components/Footer/Footer";
@@ -20,12 +21,14 @@ class ContactPage_Player extends Component {
     e.preventDefault();
     console.log("this is state before fetching api");
     console.log(this.state);
-    axios.get("http://127.0.0.1:8000/api/send/email").then(res => {
-      console.log("this is the response");
-      console.log(res);
-
-      // this.setState({ data: res.data });
-    });
+    axios
+      .get("http://127.0.0.1:8000/api/send/email")
+      .then(res => {
+        console.log("this is the response", res);
+      })
+      .catch(error => {
+        console.error(error);
+      });
   };
   //------------------------ @end handleSubmit EMAIL------------------------------------------
 
@@ -46,8 +49,7 @@ class ContactPage_Player extends Component {
         <div className="ContactContent">
           {/* ------------------------ @start grid 1 ----------------------------------------------------------- */}
           <div className="Map">
-            <img src="https://raw.githubusercontent.com/xuopled/react-google-map/HEAD/screenshots/react-google-map-exemple.png" />
-            {/* <img src="/maps/vt/data=LQ61YBoeu27O48iDoxlOV9i5y50u5Z3mNXmOw0zfvX8y6_8eZnEbZaK5zWHVX6rT3gsJAole0OKhuiz3M-ZkrRvgjnVn5AnXvS02iSGVp-5WglNI7JpT9fehl8KiNwOWeY-mfFHH3GhUzaa7WL8q40Ar" /> */}
+            <img src={map} />
           </div>
           {/* ------------------------ @end grid 1 ----------------------------------------------------------- */}
 

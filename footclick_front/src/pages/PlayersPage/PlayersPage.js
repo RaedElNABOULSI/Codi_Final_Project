@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios, { post } from "axios";
+import footballPlayerLogo from "../../assets/images/football-player-logo.jpg";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import {
   MDBJumbotron,
@@ -72,7 +73,7 @@ class PlayersPage extends Component {
           console.log("Player who requested to join a team is", this.state);
         });
       })
-      .catch(function(error) {
+      .catch(error => {
         console.log("Cannot fetch player name who wants to join", error);
       });
     //--- fetch user info----
@@ -224,10 +225,7 @@ class PlayersPage extends Component {
               <TabPanel>
                 {this.state.userInfo.map(item => (
                   <div className="TabPanelPlayers">
-                    <img
-                      src="https://images.all-free-download.com/images/graphiclarge/football_player_289.jpg"
-                      alt="error"
-                    />
+                    <img src={footballPlayerLogo} alt="error" />
                     <ul>
                       <li>
                         <strong>Footclick Name:</strong> {item.footclick_name}

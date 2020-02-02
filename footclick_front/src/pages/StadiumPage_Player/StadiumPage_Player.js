@@ -103,7 +103,10 @@ class StadiumPage_Player extends Component {
         {this.state.data.map(item => (
           <div className="Content_GridParent">
             <div className="Content_GridChildLeft">
-              <img src={item.image} alt="error" />
+              <img
+                src={require(`../../assets/images/${item.image}`)}
+                alt="error"
+              />
             </div>
             <div className="Content_GridChildRight">
               <strong>Name:</strong> {item.name}
