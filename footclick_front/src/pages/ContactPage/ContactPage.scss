@@ -1,35 +1,20 @@
 //--------------------------------------@start contact page ------------------------------------------------
 .ContactPage {
   .ContactContent {
-    // background-color: yellowgreen;
     padding-top: 10rem;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
     grid-gap: 5rem;
     height: 35rem;
     .Map {
-      //   //   width: 10%;
-      //   background-color: red;
-
       img {
         width: 90%;
         height: 33rem;
         margin-left: 3.5rem;
       }
     }
-    .ContactForm {
-      //   width: 30%;
-      //   background-color: blueviolet;
-    }
   }
   .shade {
-    // overflow: auto;
-    // position: absolute;
-    // top: 0;
-    // left: 0;
-    // bottom: 0;
-    // right: 0;
-    // background-image: linear-gradient(150deg, rgba(0, 0, 0, 0.65), transparent);
     width: 100%;
   }
 
@@ -37,7 +22,6 @@
     position: relative;
     height: 33rem;
     width: 35rem;
-    // margin: 7% auto;
     border: tan solid 12px;
     border-top: #bda27e solid 12px;
     border-left: #b19876 solid 12px;
@@ -160,6 +144,9 @@
     background: rgba(238, 238, 238, 0.4);
     color: rgba(238, 238, 238, 0.3);
     text-shadow: none;
+  }
+  #confirmation-message {
+    margin-top: 1rem;
   }
   .Footer_Contact {
     margin-top: 12rem;

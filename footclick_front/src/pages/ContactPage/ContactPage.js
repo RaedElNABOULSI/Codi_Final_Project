@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import ReactDOM from "react-dom";
 import axios from "axios";
 import map from "../../assets/images/map-contact-page.png";
 //------------------------ @start import components ----------------------------------------------------------------
@@ -17,13 +18,20 @@ class ContactPage extends Component {
   //------------------------ @start handleSubmit EMAIL-----------------------------------------
   handleSubmit = e => {
     e.preventDefault();
-    console.log("this is state before fetching api");
-    console.log(this.state);
+    console.log("this is state before fetching api", this.state);
     axios
-      .get("http://127.0.0.1:8000/api/send/email")
+      .post("http://127.0.0.1:8000/api/send/email", {
+        senderName: this.state.name,
+        email: this.state.email,
+        subject: this.state.subject,
+        message: this.state.message
+      })
       .then(res => {
-        console.log("this is the response");
-        console.log(res);
+        console.log("Response from the server: ", res.data);
+        ReactDOM.render(
+          <p>{res.data.message}</p>,
+          document.getElementById("confirmation-message")
+        );
       })
       .catch(error => {
         console.error(error);
@@ -104,14 +112,14 @@ class ContactPage extends Component {
                         placeholder="Your message ..."
                       ></textarea>
                     </p>
-                    <p class="wipeout">
+                    <p className="wipeout">
                       <input type="submit" value="Send" />
                     </p>
                   </form>
                 </div>
               </div>
             </div>
-
+            <div id="confirmation-message"></div>
             {/* ------------------------ @end grid 2 ----------------------------------------------------------- */}
           </div>
           {/* ------------------------ @end ContactContent ---------------------------------------------------------------- */}
