@@ -20,10 +20,15 @@ class BestGoalsPage_Player extends Component {
 
   //------------------------ @start Fetching goal footage-------------------------------------------------------
   componentDidMount() {
-    axios.get("http://127.0.0.1:8000/api/bestgoal").then(res => {
-      console.log(res.data);
-      this.setState({ data: res.data });
-    });
+    axios
+      .get("http://127.0.0.1:8000/api/bestgoal")
+      .then(res => {
+        console.log(res.data);
+        this.setState({ data: res.data });
+      })
+      .catch(error => {
+        console.error(error);
+      });
   }
   //------------------------ @end Fetching goal gootage -----------------------------------------------------------
 
